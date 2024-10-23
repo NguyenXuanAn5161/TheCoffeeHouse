@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+      "baseUrl": "./",
+      "paths": {
+        "@/*": ["/*"]  // Alias "@" trỏ đến thư mục gốc
+      }
+    }
+  }
+  
