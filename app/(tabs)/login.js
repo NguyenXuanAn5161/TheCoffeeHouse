@@ -38,7 +38,7 @@ const Login = () => {
             </Text>
             <TouchableOpacity onPress={() => {}}>
               <Text
-                style={[styles.txtInput, { fontSize: 17, fontWeight: 700 }]}
+                style={[styles.txtInput, { fontSize: 17, fontWeight: "700" }]}
               >
                 Đăng ký
               </Text>
@@ -85,10 +85,10 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     paddingHorizontal: 20,
   },
-  txtInput: { fontSize: 20, fontWeight: 400, color: "#834637" },
+  txtInput: { fontSize: 20, fontWeight: "400", color: "#834637" },
   txtBtn: {
     fontSize: 26,
-    fontWeight: 700,
+    fontWeight: "700",
     textTransform: "uppercase",
     color: "#ffffff",
   },
