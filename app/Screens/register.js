@@ -10,7 +10,11 @@ import {
   View,
 } from "react-native";
 
-const Register = () => {
+const Register = ({ navigation }) => {
+  const handleLogin = () => {
+    navigation.navigate("Login");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.viewLogo}>
@@ -36,7 +40,7 @@ const Register = () => {
             <Text style={[styles.txtInput, { fontSize: 17 }]}>
               Bạn chưa có tài khoản?
             </Text>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => handleLogin()}>
               <Text
                 style={[styles.txtInput, { fontSize: 17, fontWeight: "700" }]}
               >
