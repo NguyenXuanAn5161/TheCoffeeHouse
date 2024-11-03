@@ -1,4 +1,7 @@
 import logoCoffee from "@/assets/images/TheCoffeHouse.png";
+import CustomButton from "@/components/CustomButton";
+import CustomInput from "@/components/CustomInput";
+import { fontSizes, globalStyles } from "@/styles/globalStyles";
 import {
   Image,
   KeyboardAvoidingView,
@@ -16,38 +19,32 @@ const Register = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.viewLogo}>
-        <Image source={logoCoffee} style={styles.logo} />
+    <View style={globalStyles.container}>
+      <View style={[globalStyles.centered, { flex: 1 }]}>
+        <Image source={logoCoffee} style={globalStyles.logo} />
       </View>
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.viewInput}
       >
-        <TextInput
-          style={[styles.input, styles.txtInput]}
-          placeholder="Tài khoản"
-        />
-        <TextInput
-          style={[styles.input, styles.txtInput]}
-          placeholder="Mật khẩu"
-        />
-        <View style={styles.viewBtn}>
-          <TouchableOpacity onPress={() => {}} style={styles.btn}>
-            <Text style={styles.txtBtn}>Đăng ký</Text>
-          </TouchableOpacity>
-          <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-            <Text style={[styles.txtInput, { fontSize: 17 }]}>
-              Bạn chưa có tài khoản?
+        <CustomInput placeholder={"Tài khoản"} />
+        <CustomInput placeholder={"Mật khẩu"} secureTextEntry={true} />
+        <CustomButton title={"Đăng ký"} onPress={{}} />
+
+        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <Text style={[globalStyles.inputText, { fontSize: fontSizes.small }]}>
+            Bạn chưa có tài khoản?
+          </Text>
+          <TouchableOpacity onPress={() => handleLogin()}>
+            <Text
+              style={[
+                globalStyles.inputText,
+                { fontSize: fontSizes.small, fontWeight: "700" },
+              ]}
+            >
+              Đăng nhập
             </Text>
-            <TouchableOpacity onPress={() => handleLogin()}>
-              <Text
-                style={[styles.txtInput, { fontSize: 17, fontWeight: "700" }]}
-              >
-                Đăng nhập
-              </Text>
-            </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>
