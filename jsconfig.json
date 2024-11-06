@@ -2,7 +2,9 @@
     "compilerOptions": {
       "baseUrl": "./",
       "paths": {
-        "@/*": ["./*"]  // Alias "@" trỏ đến thư mục gốc
+        "@/*": ["./*"],  // Alias "@" trỏ đến thư mục gốc
+        "@screens/*": ["app/screens/*"],
+        "@components/*": ["./components/*"],
       }
     }
   }
