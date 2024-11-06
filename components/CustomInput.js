@@ -4,7 +4,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { TextInput } from "react-native-paper";
 
-const CustomInput = ({ label, secureTextEntry, rightIcon }) => (
+const CustomInput = ({ field, form, label, secureTextEntry, rightIcon }) => (
   <TextInput
     theme={{
       colors: {
@@ -14,6 +14,8 @@ const CustomInput = ({ label, secureTextEntry, rightIcon }) => (
       },
     }}
     label={label}
+    value={field.value}
+    onChangeText={form.handleChange(field.name)}
     mode="outlined"
     outlineStyle={styles.outlineStyle}
     style={styles.input}
