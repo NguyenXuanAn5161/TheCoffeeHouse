@@ -3,7 +3,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "./app/screens/login";
-import Register from "./app/screens/register";
+// import Register from "./app/screens/register";
 import Home from "./app/screens/Home";
 import Notification from "./app/screens/Notification";
 import Payment from "./app/screens/Payment";
