@@ -1,27 +1,33 @@
 // components/CustomInput.js
+import { colors } from "@/styles/globalStyles";
 import React from "react";
-import { TextInput, StyleSheet } from "react-native";
+import { StyleSheet } from "react-native";
+import { TextInput } from "react-native-paper";
 
-const CustomInput = ({ placeholder, secureTextEntry, style }) => (
+const CustomInput = ({ field, form, label, secureTextEntry, rightIcon }) => (
   <TextInput
-    style={[styles.input, style]}
-    placeholder={placeholder}
+    theme={{
+      colors: {
+        text: colors.primary,
+        background: colors.white,
+        primary: colors.primary,
+      },
+    }}
+    label={label}
+    value={field.value}
+    onChangeText={form.handleChange(field.name)}
+    mode="outlined"
+    outlineStyle={styles.outlineStyle}
+    style={styles.input}
     secureTextEntry={secureTextEntry}
+    right={rightIcon && <TextInput.Icon {...rightIcon} />}
   />
 );
 
 const styles = StyleSheet.create({
   input: {
-    backgroundColor: "#fff",
     width: "90%",
-    height: 50,
-    borderRadius: 50,
-    paddingHorizontal: 20,
-    shadowColor: "#000",
-    shadowOffset: { width: 2, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
-    fontSize: 20,
+    backgroundColor: "#fff",
     fontWeight: "400",
     color: "#834637",
   },
