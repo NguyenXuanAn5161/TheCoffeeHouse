@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
       >
         <CustomInput placeholder={"Tài khoản"} />
         <CustomInput placeholder={"Mật khẩu"} secureTextEntry={true} />
-        <CustomButton title={"Đăng nhập"} onPress={{}} />
+        <CustomButton title={"Đăng nhập"} onPress={()=>navigation.navigate('Home')}/>
         <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
           <Text style={[globalStyles.inputText, { fontSize: fontSizes.small }]}>
             Bạn chưa có tài khoản?
