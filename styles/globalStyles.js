@@ -13,6 +13,7 @@ const fontSizes = {
   large: 26,
   medium: 20,
   small: 17,
+  sz14: 14,
 };
 
 const globalStyles = StyleSheet.create({

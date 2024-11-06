@@ -25,6 +25,7 @@ const LoginScreen = ({ navigation }) => {
 
   const handleSubmit = (values) => {
     console.log(values);
+    navigation.navigate("BottomTab");
     // Logic xử lý đăng nhập tại đây
   };
 
