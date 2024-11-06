@@ -2,6 +2,7 @@ import logoCoffee from "@/assets/images/TheCoffeHouse.png";
 import CustomButton from "@/components/CustomButton";
 import CustomInput from "@/components/CustomInput";
 import { fontSizes, globalStyles } from "@/styles/globalStyles";
+import { useState } from "react";
 import {
   Image,
   KeyboardAvoidingView,
@@ -14,6 +15,8 @@ import {
 } from "react-native";
 
 const Register = ({ navigation }) => {
+  const [passwordVisible, setPasswordVisible] = useState(true);
+
   const handleLogin = () => {
     navigation.navigate("Login");
   };
@@ -27,8 +30,15 @@ const Register = ({ navigation }) => {
         behavior={Platform.OS === "ios" ? "padding" : undefined}
         style={styles.viewInput}
       >
-        <CustomInput placeholder={"Tài khoản"} />
-        <CustomInput placeholder={"Mật khẩu"} secureTextEntry={true} />
+        <CustomInput label="Tài khoản" secureTextEntry={false} />
+        <CustomInput
+          label="Mật khẩu"
+          secureTextEntry={passwordVisible}
+          rightIcon={{
+            icon: passwordVisible ? "eye" : "eye-off",
+            onPress: () => setPasswordVisible(!passwordVisible),
+          }}
+        />
         <CustomButton title={"Đăng ký"} onPress={{}} />
 
         <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
