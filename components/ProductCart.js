@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
   card: {
     width: "45%",
     backgroundColor: colors.white,
-    borderRadius: 15,
+    borderRadius: 5,
     marginBottom: 15,
-    paddingVertical: 15,
+    paddingBottom: 15,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   product: {
     alignItems: "center",
-    paddingVertical: 10,
+    paddingBottom: 10,
   },
   img_product: {
     width: 90,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
   info_product: {
     alignItems: "center",
-    marginTop: 12,
+    marginTop: 5,
   },
   title_product: {
     fontSize: fontSizes.small,
