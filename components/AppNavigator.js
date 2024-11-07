@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import BottomTab from "./BottomTab";
 import Login from "@screens/login";
 import Register from "@screens/register";
+import ShoppingCart from "@screens/ShoppingCart";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +20,11 @@ const AppNavigator = () => {
         name="Register"
         component={Register}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="ShoppingCart"
+        component={ShoppingCart}
+        options={{ title: "Giỏ hàng" }}
       />
       {/* <Stack.Screen
         name="ProductDetail"

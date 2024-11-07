@@ -6,6 +6,7 @@ import Account from "@screens/Account";
 import Home from "@screens/Home";
 import Notification from "@screens/Notification";
 import { StyleSheet, View, Text } from "react-native";
+import CustomHeader from "./CustomHeader";
 
 const Tab = createBottomTabNavigator();
 
@@ -18,13 +19,14 @@ const BottomTab = () => {
         tabBarActiveTintColor: colors.white,
         tabBarInactiveTintColor: colors.white,
         tabBarStyle: { height: 70 },
-        headerShown: false,
+        // headerShown: false,
       }}
     >
       <Tab.Screen
         name="Home"
         component={Home}
-        options={{
+        options={({ navigation }) => ({
+          header: () => <CustomHeader navigation={navigation} />,
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -50,12 +52,13 @@ const BottomTab = () => {
               Home
             </Text>
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="Product"
         component={Products}
-        options={{
+        options={({ navigation }) => ({
+          header: () => <CustomHeader navigation={navigation} />,
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -81,7 +84,7 @@ const BottomTab = () => {
               Coffee
             </Text>
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="Notification"
@@ -155,8 +158,8 @@ const styles = StyleSheet.create({
   iconContainer: {
     justifyContent: "center",
     alignItems: "center",
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
   },
   focusedIconContainer: {
     backgroundColor: colors.white,
