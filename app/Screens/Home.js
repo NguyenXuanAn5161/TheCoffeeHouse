@@ -13,6 +13,7 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useState } from "react";
 import { colors } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCart";
+import CustomBanner from "@/components/CustomBanner";
 
 const category = [
   {
@@ -74,27 +75,7 @@ export default function Home({ navigation }) {
           <CustomSearch />
         </View>
         <View style={styles.mainContent}>
-          <View style={styles.banner}>
-            <Image
-              source={require("@/assets/images/banner1.png")}
-              style={styles.img_banner}
-            />
-            <View style={styles.circle}>
-              <FontAwesome
-                name="circle"
-                size={15}
-                color="#834637"
-                style={{ marginRight: 5 }}
-              />
-              <FontAwesome
-                name="circle"
-                size={15}
-                color="grey"
-                style={{ marginRight: 5 }}
-              />
-              <FontAwesome name="circle" size={15} color="grey" />
-            </View>
-          </View>
+          <CustomBanner />
 
           <View>
             <ScrollView
@@ -160,29 +141,6 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     paddingBottom: 20,
-  },
-  circle: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  banner: {
-    marginTop: 20,
-    borderRadius: 5,
-    width: "95%",
-    alignSelf: "center",
-  },
-  img_banner: {
-    resizeMode: "contain",
-    height: 200,
-    width: "100%",
-    borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4,
-    elevation: 4,
   },
   category: {
     width: 100,
