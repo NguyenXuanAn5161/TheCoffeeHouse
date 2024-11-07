@@ -1,6 +1,6 @@
 import Products from "@/app/screens/Products";
 import { colors, fontSizes } from "@/styles/globalStyles";
-import { Fontisto, Ionicons } from "@expo/vector-icons";
+import { Fontisto, Ionicons, AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Account from "@screens/Account";
 import Home from "@screens/Home";
@@ -13,6 +13,7 @@ const Tab = createBottomTabNavigator();
 const BottomTab = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Tài khoản"
       screenOptions={{
         tabBarActiveBackgroundColor: colors.primary,
         tabBarInactiveBackgroundColor: colors.primary,
@@ -118,9 +119,19 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Account"
+        name="Tài khoản"
         component={Account}
         options={{
+          headerTintColor: colors.white,
+          headerBackground: () => (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: colors.primary,
+              }}
+            />
+          ),
+          headerRight: () => <RightICon />,
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -149,6 +160,18 @@ const BottomTab = () => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+const RightICon = () => {
+  return (
+    <AntDesign
+      onPress={() => console.log("shopping cart")}
+      name="shoppingcart"
+      size={26}
+      color={colors.white}
+      style={{ marginRight: 15 }}
+    />
   );
 };
 

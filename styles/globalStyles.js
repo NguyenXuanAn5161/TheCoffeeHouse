@@ -11,10 +11,13 @@ const colors = {
 };
 
 const fontSizes = {
-  large: 26,
-  medium: 20,
-  small: 17,
   sz14: 14,
+  sz15: 15,
+  sz16: 16,
+  small: 17,
+  sz18: 18,
+  medium: 20,
+  large: 26,
 };
 
 const globalStyles = StyleSheet.create({
@@ -63,6 +66,15 @@ const globalStyles = StyleSheet.create({
   centered: {
     justifyContent: "center",
     alignItems: "center",
+  },
+  shadow: {
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 4,
   },
 });
 
