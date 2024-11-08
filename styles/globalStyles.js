@@ -8,6 +8,7 @@ const colors = {
   backgroundGrey: "#D9D9D9",
   text: "#000000",
   white: "#FFFFFF",
+  cartItemCard: "#F1dAdA",
 };
 
 const fontSizes = {
