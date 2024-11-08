@@ -9,6 +9,7 @@ const colors = {
   text: "#000000",
   white: "#FFFFFF",
   cartItemCard: "#F1dAdA",
+  danger: "red",
 };
 
 const fontSizes = {

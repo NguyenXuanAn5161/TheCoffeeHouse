@@ -1,10 +1,18 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React from "react";
-import { Checkbox } from "react-native-paper"; // Import Checkbox from react-native-paper
+import React, { useState } from "react";
+import { Checkbox } from "react-native-paper";
+import { FontAwesome6, Feather } from "@expo/vector-icons";
 import { colors } from "@/styles/globalStyles";
 
-// CartItemCard component
 const CartItemCard = ({ product, onRemove, isChecked, onCheck }) => {
+  const [quantity, setQuantity] = useState(1);
+
+  const handleQuantityChange = (type) => {
+    setQuantity((prevQuantity) =>
+      type === "increment" ? prevQuantity + 1 : Math.max(1, prevQuantity - 1)
+    );
+  };
+
   return (
     <View style={styles.cardContainer}>
       {/* Checkbox */}
@@ -22,11 +30,28 @@ const CartItemCard = ({ product, onRemove, isChecked, onCheck }) => {
         <Text style={styles.productTitle}>{product.title}</Text>
         <Text style={styles.productPrice}>{product.price}</Text>
         <Text style={styles.productSize}>Size: {product.selectedSize}</Text>
+
+        {/* Quantity control */}
+        <View style={styles.quantityContainer}>
+          <TouchableOpacity
+            onPress={() => handleQuantityChange("decrement")}
+            style={styles.quantityButton}
+          >
+            <FontAwesome6 name="minus" size={20} color={colors.primary} />
+          </TouchableOpacity>
+          <Text style={styles.quantityText}>{quantity}</Text>
+          <TouchableOpacity
+            onPress={() => handleQuantityChange("increment")}
+            style={styles.quantityButton}
+          >
+            <FontAwesome6 name="plus" size={20} color={colors.primary} />
+          </TouchableOpacity>
+        </View>
       </View>
 
       {/* Remove button */}
       <TouchableOpacity style={styles.removeButton} onPress={onRemove}>
-        <Text style={styles.removeButtonText}>Remove</Text>
+        <Feather name="trash-2" size={24} color={colors.danger} />
       </TouchableOpacity>
     </View>
   );
@@ -67,14 +92,27 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#757575",
   },
+  quantityContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 8,
+    gap: 8,
+  },
+  quantityButton: {
+    width: 30,
+    height: 30,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderRadius: 5,
+    borderColor: colors.primary,
+  },
+  quantityText: {
+    fontSize: 18,
+  },
   removeButton: {
-    backgroundColor: "#ff5722",
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 8,
-  },
-  removeButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
   },
 });

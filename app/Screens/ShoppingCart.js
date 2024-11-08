@@ -31,17 +31,28 @@ const ShoppingCart = () => {
 
   const [isChecked, setIsChecked] = useState(false);
 
+  const [selectedItems, setSelectedItems] = useState({});
+
+  const handleCheckItem = (id) => {
+    setSelectedItems((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id],
+    }));
+  };
+
   const handleRemoveItem = (id) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.cartItemList}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
         {cartItems.map((item) => (
           <CartItemCard
             key={item.id}
             product={item}
+            isChecked={selectedItems[item.id]}
+            onCheck={() => handleCheckItem(item.id)}
             onRemove={() => handleRemoveItem(item.id)}
           />
         ))}
@@ -80,7 +91,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.white,
   },
-  cartItemList: {
+  scrollContainer: {
     padding: 16,
     paddingBottom: 80, // Avoid overlap with checkout button
   },
