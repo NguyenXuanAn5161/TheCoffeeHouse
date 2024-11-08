@@ -11,13 +11,19 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
 
-const HeaderBackButton = ({ navigation }) => (
+const HeaderBackButton = ({ navigation, withBackground = true, color }) => (
   <Pressable onPress={() => navigation.goBack()} style={styles.headerButton}>
-    <View style={[globalStyles.shadow, styles.buttonContainer]}>
+    <View
+      style={[
+        styles.buttonContainer,
+        withBackground && globalStyles.shadow,
+        { backgroundColor: withBackground ? colors.white : "transparent" },
+      ]}
+    >
       <MaterialIcons
         name="keyboard-arrow-left"
         size={30}
-        color={colors.primary}
+        color={color ? colors.white : colors.primary}
       />
     </View>
   </Pressable>
@@ -35,7 +41,7 @@ const HeaderCartButton = ({ navigation }) => (
 const AppNavigator = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Stack.Navigator initialRouteName="BottomTab">
+      <Stack.Navigator initialRouteName="ShoppingCart">
         <Stack.Screen
           name="Login"
           component={Login}
@@ -49,7 +55,18 @@ const AppNavigator = () => {
         <Stack.Screen
           name="ShoppingCart"
           component={ShoppingCart}
-          options={{ title: "Giỏ hàng" }}
+          options={({ navigation }) => ({
+            headerTitle: "Giỏ hàng",
+            headerTitleStyle: styles.headerTitleStyle,
+            headerStyle: styles.headerStyle,
+            headerLeft: () => (
+              <HeaderBackButton
+                withBackground={false}
+                color={colors.white}
+                navigation={navigation}
+              />
+            ),
+          })}
         />
         <Stack.Screen
           name="ProductDetail"
@@ -75,6 +92,7 @@ const styles = StyleSheet.create({
   headerStyle: {
     backgroundColor: colors.primary,
   },
+  headerTitleStyle: { color: colors.white },
   headerButton: {
     paddingHorizontal: 10,
   },
