@@ -30,9 +30,9 @@ const ShoppingCart = () => {
   ]);
 
   const [isChecked, setIsChecked] = useState(false);
-
   const [selectedItems, setSelectedItems] = useState({});
 
+  // Handle individual item checkbox change
   const handleCheckItem = (id) => {
     setSelectedItems((prevState) => ({
       ...prevState,
@@ -40,6 +40,19 @@ const ShoppingCart = () => {
     }));
   };
 
+  // Handle "Select All" checkbox change
+  const handleSelectAll = () => {
+    const newCheckedStatus = !isChecked;
+    setIsChecked(newCheckedStatus);
+    // Update selectedItems for all cart items
+    const updatedSelectedItems = cartItems.reduce((acc, item) => {
+      acc[item.id] = newCheckedStatus;
+      return acc;
+    }, {});
+    setSelectedItems(updatedSelectedItems);
+  };
+
+  // Handle removing an item
   const handleRemoveItem = (id) => {
     setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
   };
@@ -61,14 +74,21 @@ const ShoppingCart = () => {
       {/* Checkout Section */}
       <View style={styles.checkoutContainer}>
         {/* Select All Checkbox */}
-        <View style={styles.checkboxWrapper}>
+        <TouchableOpacity
+          onPress={() => handleSelectAll()}
+          style={styles.checkboxWrapper}
+        >
           <Checkbox
+            status={
+              Object.values(selectedItems).every((val) => val)
+                ? "checked"
+                : "unchecked"
+            }
             color={colors.primary}
             value={isChecked}
-            onValueChange={() => setIsChecked(!isChecked)}
           />
           <Text style={styles.checkboxLabel}>Tất cả</Text>
-        </View>
+        </TouchableOpacity>
 
         {/* Total Price and Checkout Button */}
         <View style={{ flexDirection: "row", gap: 5, alignItems: "center" }}>
