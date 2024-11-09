@@ -1,4 +1,4 @@
-import { colors } from "@/styles/globalStyles";
+import { colors, globalStyles } from "@/styles/globalStyles";
 import React from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
@@ -8,6 +8,7 @@ const CustomButton = ({ title, onPress }) => (
     buttonColor={colors.primary}
     contentStyle={styles.buttonContent}
     labelStyle={styles.buttonText}
+    style={[styles.button, globalStyles.shadow]}
     mode="contained"
     onPress={onPress}
   >
@@ -16,9 +17,9 @@ const CustomButton = ({ title, onPress }) => (
 );
 
 const styles = StyleSheet.create({
+  button: { borderRadius: 8 },
   buttonContent: {
-    minWidth: "90%",
-    height: 50,
+    paddingVertical: 8,
   },
   buttonText: {
     fontSize: 20,

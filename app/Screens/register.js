@@ -12,7 +12,6 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -43,35 +42,38 @@ const Register = ({ navigation }) => {
             : 30;
         return (
           <View style={globalStyles.container}>
-            <View style={[globalStyles.centered, { flex: 1 }]}>
+            <View style={[globalStyles.centered, styles.viewLogo]}>
               <Image source={logoCoffee} style={globalStyles.logo} />
             </View>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : undefined}
               style={[styles.viewInput, { gap }]}
             >
-              <Field
-                name="username"
-                component={CustomInput}
-                label="Tài khoản"
-                secureTextEntry={false}
-              />
-              <CustomErrorMessage msg={touched.username && errors.username} />
-
-              <Field
-                name="password"
-                component={CustomInput}
-                label="Mật khẩu"
-                secureTextEntry={passwordVisible}
-                rightIcon={{
-                  icon: passwordVisible ? "eye" : "eye-off",
-                  onPress: () => setPasswordVisible(!passwordVisible),
-                }}
-              />
-              <CustomErrorMessage msg={touched.password && errors.password} />
-
-              <CustomButton title="Đăng ký" onPress={handleSubmit} />
-
+              <View style={{ width: "90%" }}>
+                <Field
+                  name="username"
+                  component={CustomInput}
+                  label="Tài khoản"
+                  secureTextEntry={false}
+                />
+                <CustomErrorMessage msg={touched.username && errors.username} />
+              </View>
+              <View style={{ width: "90%" }}>
+                <Field
+                  name="password"
+                  component={CustomInput}
+                  label="Mật khẩu"
+                  secureTextEntry={passwordVisible}
+                  rightIcon={{
+                    icon: passwordVisible ? "eye" : "eye-off",
+                    onPress: () => setPasswordVisible(!passwordVisible),
+                  }}
+                />
+                <CustomErrorMessage msg={touched.password && errors.password} />
+              </View>
+              <View style={{ width: "90%" }}>
+                <CustomButton title="Đăng ký" onPress={handleSubmit} />
+              </View>
               <View
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
               >
@@ -105,9 +107,11 @@ const Register = ({ navigation }) => {
 export default Register;
 
 const styles = StyleSheet.create({
+  viewLogo: {
+    flex: 3 / 7,
+  },
   viewInput: {
-    marginTop: "30%",
-    flex: 2,
+    flex: 4 / 7,
     alignItems: "center",
   },
 });

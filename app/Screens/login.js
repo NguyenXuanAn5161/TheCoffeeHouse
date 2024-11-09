@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Formik, Field, ErrorMessage } from "formik";
+import { Formik, Field } from "formik";
 import {
   View,
   Text,
@@ -43,35 +43,40 @@ const LoginScreen = ({ navigation }) => {
             : 30;
         return (
           <View style={globalStyles.container}>
-            <View style={[globalStyles.centered, { flex: 1 }]}>
-              <Image source={logoCoffee} style={globalStyles.logo} />
+            <View style={[globalStyles.centered, styles.viewLogo]}>
+              <Image source={logoCoffee} style={[globalStyles.logo]} />
             </View>
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : undefined}
               style={[styles.viewInput, { gap }]}
             >
-              <Field
-                name="username"
-                component={CustomInput}
-                label="Tài khoản"
-                secureTextEntry={false}
-              />
-              <CustomErrorMessage msg={touched.username && errors.username} />
+              <View style={{ width: "90%" }}>
+                <Field
+                  name="username"
+                  component={CustomInput}
+                  label="Tài khoản"
+                  secureTextEntry={false}
+                />
+                <CustomErrorMessage msg={touched.username && errors.username} />
+              </View>
 
-              <Field
-                name="password"
-                component={CustomInput}
-                label="Mật khẩu"
-                secureTextEntry={passwordVisible}
-                rightIcon={{
-                  icon: passwordVisible ? "eye" : "eye-off",
-                  onPress: () => setPasswordVisible(!passwordVisible),
-                }}
-              />
-              <CustomErrorMessage msg={touched.password && errors.password} />
+              <View style={{ width: "90%" }}>
+                <Field
+                  name="password"
+                  component={CustomInput}
+                  label="Mật khẩu"
+                  secureTextEntry={passwordVisible}
+                  rightIcon={{
+                    icon: passwordVisible ? "eye" : "eye-off",
+                    onPress: () => setPasswordVisible(!passwordVisible),
+                  }}
+                />
+                <CustomErrorMessage msg={touched.password && errors.password} />
+              </View>
 
-              <CustomButton title="Đăng nhập" onPress={handleSubmit} />
-
+              <View style={{ width: "90%" }}>
+                <CustomButton title="Đăng nhập" onPress={handleSubmit} />
+              </View>
               <View
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
               >
@@ -105,10 +110,11 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
+  viewLogo: {
+    flex: 3 / 7,
+  },
   viewInput: {
-    marginTop: "30%",
-    flex: 2,
-    gap: 10,
+    flex: 4 / 7,
     alignItems: "center",
   },
 });

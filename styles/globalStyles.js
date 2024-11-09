@@ -1,4 +1,3 @@
-// styles/globalStyles.js
 import { StyleSheet } from "react-native";
 
 // Các biến chung
@@ -31,9 +30,8 @@ const globalStyles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   logo: {
-    marginTop: "10%",
-    height: "90%",
-    width: "90%",
+    height: "80%",
+    width: "80%",
     resizeMode: "contain",
   },
   button: {
@@ -74,9 +72,9 @@ const globalStyles = StyleSheet.create({
   },
   shadow: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 0.3,
-    shadowRadius: 4,
+    shadowRadius: 5,
     elevation: 4,
   },
 });

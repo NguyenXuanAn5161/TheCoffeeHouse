@@ -1,4 +1,3 @@
-// components/CustomInput.js
 import { colors } from "@/styles/globalStyles";
 import React from "react";
 import { StyleSheet } from "react-native";
@@ -18,7 +17,7 @@ const CustomInput = ({ field, form, label, secureTextEntry, rightIcon }) => (
     onChangeText={form.handleChange(field.name)}
     mode="outlined"
     outlineStyle={styles.outlineStyle}
-    style={styles.input}
+    style={[styles.input]}
     secureTextEntry={secureTextEntry}
     right={rightIcon && <TextInput.Icon {...rightIcon} />}
   />
@@ -26,7 +25,7 @@ const CustomInput = ({ field, form, label, secureTextEntry, rightIcon }) => (
 
 const styles = StyleSheet.create({
   input: {
-    width: "90%",
+    width: "100%",
     backgroundColor: "#fff",
     fontWeight: "400",
     color: "#834637",
