@@ -1,4 +1,3 @@
-import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,
   Text,
@@ -8,8 +7,6 @@ import {
   ScrollView,
 } from "react-native";
 import CustomSearch from "@/components/CustomSearch";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useState } from "react";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCart";
@@ -79,9 +76,11 @@ export default function Home({ navigation }) {
           <CustomSearch />
         </View>
         <View style={styles.mainContent}>
-          <CustomBanner />
+          <View style={{ flex: 1 / 3 }}>
+            <CustomBanner />
+          </View>
 
-          <View>
+          <View style={{ flex: 2 / 3 }}>
             <ScrollView
               contentContainerStyle={styles.categoryScroll}
               horizontal
@@ -102,21 +101,16 @@ export default function Home({ navigation }) {
 
           <View>
             <Text style={styles.text_title_product}>Sản phẩm mới</Text>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                justifyContent: "space-around",
-                rowGap: 5,
-              }}
-            >
+
+            <View style={styles.viewProduct}>
               {dataProduct.map((item, index) => (
-                <ProductCard
-                  key={item.id}
-                  product={item}
-                  onPress={() => handleProductPress(item.id)}
-                  onAdd={() => handleAddToCart(item.id)}
-                />
+                <View key={item.id} style={{ width: "45%" }}>
+                  <ProductCard
+                    product={item}
+                    onPress={() => handleProductPress(item.id)}
+                    onAdd={() => handleAddToCart(item.id)}
+                  />
+                </View>
               ))}
             </View>
           </View>
@@ -165,5 +159,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 10,
     marginTop: 10,
+  },
+  viewProduct: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    rowGap: 5,
   },
 });
