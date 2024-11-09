@@ -99,7 +99,7 @@ const ShoppingCart = () => {
           onPress={() => Alert.alert("Success", "Mua thành công!")}
           style={styles.checkoutButton}
         >
-          <Text style={styles.checkoutButtonText}>Mua hàng</Text>
+          <Text style={styles.checkoutButtonText}>Đặt hàng</Text>
         </TouchableOpacity>
       </View>
     </View>
