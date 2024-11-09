@@ -67,7 +67,7 @@ const Payment = () => {
           showsVerticalScrollIndicator={false}
           style={{ paddingHorizontal: 16 }}
         >
-          <View style={{ rowGap: 10 }}>
+          <View style={{ rowGap: 10, marginTop: 10 }}>
             {cartItems.map((item) => (
               <CartItemPayment key={item.id} item={item} />
             ))}
