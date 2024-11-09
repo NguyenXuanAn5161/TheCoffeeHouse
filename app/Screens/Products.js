@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -91,6 +92,7 @@ const Products = ({ navigation }) => {
   };
 
   const handleAddToCart = (id) => {
+    Alert.alert("Success", "Thêm vào giỏ hàng thành công!");
     navigation.navigate("ShoppingCart", { id });
   };
 
@@ -141,12 +143,13 @@ const Products = ({ navigation }) => {
 
           <View style={styles.productGrid}>
             {filteredProducts.map((item) => (
-              <ProductCard
-                key={item.id}
-                product={item}
-                onPress={() => handleProductPress(item.id)}
-                onAdd={() => handleAddToCart(item.id)}
-              />
+              <View key={item.id} style={{ width: "45%" }}>
+                <ProductCard
+                  product={item}
+                  onPress={() => handleProductPress(item.id)}
+                  onAdd={() => handleAddToCart(item.id)}
+                />
+              </View>
             ))}
           </View>
         </View>
