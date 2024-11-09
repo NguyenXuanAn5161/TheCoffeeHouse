@@ -52,12 +52,7 @@ const styles = StyleSheet.create({
   img_banner: {
     width: "95%",
     height: "95%",
-    resizeMode: "cover",
+    resizeMode: "contain",
     borderRadius: 10,
-    // shadowColor: "#000",
-    // shadowOffset: { width: 0, height: 2 },
-    // shadowOpacity: 0.3,
-    // shadowRadius: 4,
-    // elevation: 4,
   },
 });

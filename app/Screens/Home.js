@@ -11,7 +11,7 @@ import CustomSearch from "@/components/CustomSearch";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useState } from "react";
-import { colors } from "@/styles/globalStyles";
+import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCart";
 import CustomBanner from "@/components/CustomBanner";
 
@@ -69,8 +69,12 @@ export default function Home({ navigation }) {
   const [dataProduct, setDataProduct] = useState(product);
 
   return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }} scrollEnabled={true}>
+    <View style={globalStyles.container}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        scrollEnabled={true}
+        showsHorizontalScrollIndicator={false}
+      >
         <View style={{ alignItems: "center" }}>
           <CustomSearch />
         </View>
@@ -123,11 +127,6 @@ export default function Home({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    height: "100%",
-    backgroundColor: colors.background,
-  },
   mainContent: {
     flex: 1,
     backgroundColor: colors.background,
@@ -138,9 +137,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     padding: 10,
-  },
-  scrollContent: {
-    paddingBottom: 20,
   },
   category: {
     width: 100,
@@ -156,24 +152,18 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   name_cate: {
-    color: "#834637",
+    color: colors.primary,
     textAlign: "center",
-    fontSize: 15,
+    fontSize: fontSizes.sz15,
     fontWeight: "700",
     marginLeft: -10,
   },
   text_title_product: {
-    fontSize: 18,
+    fontSize: fontSizes.sz18,
     color: colors.primary,
     fontWeight: "bold",
     marginBottom: 10,
     marginLeft: 10,
     marginTop: 10,
-  },
-  title_product: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#834637",
-    textAlign: "center",
   },
 });

@@ -20,7 +20,7 @@ const BottomTab = () => {
         tabBarActiveTintColor: colors.white,
         tabBarInactiveTintColor: colors.white,
         tabBarStyle: { height: 70 },
-        // headerShown: false,
+        tabBarLabelPosition: "below-icon",
       }}
     >
       <Tab.Screen
@@ -50,7 +50,7 @@ const BottomTab = () => {
                 color: colors.white,
               }}
             >
-              Home
+              Trang chủ
             </Text>
           ),
         })}
