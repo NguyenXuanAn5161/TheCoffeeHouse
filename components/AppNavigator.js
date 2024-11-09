@@ -8,6 +8,7 @@ import ShoppingCart from "@screens/ShoppingCart";
 import ProductDetail from "@screens/ProductDetail";
 import { colors, globalStyles } from "@/styles/globalStyles";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import Payment from "@/app/screens/Payment";
 
 const Stack = createStackNavigator();
 
@@ -76,6 +77,22 @@ const AppNavigator = () => {
             headerStyle: styles.headerStyle,
             headerLeft: () => <HeaderBackButton navigation={navigation} />,
             headerRight: () => <HeaderCartButton navigation={navigation} />,
+          })}
+        />
+        <Stack.Screen
+          name="Payment"
+          component={Payment}
+          options={({ navigation }) => ({
+            headerTitle: "Thanh toán",
+            headerTitleStyle: styles.headerTitleStyle,
+            headerStyle: styles.headerStyle,
+            headerLeft: () => (
+              <HeaderBackButton
+                withBackground={false}
+                color={colors.white}
+                navigation={navigation}
+              />
+            ),
           })}
         />
         <Stack.Screen

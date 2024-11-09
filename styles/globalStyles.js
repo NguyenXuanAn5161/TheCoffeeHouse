@@ -10,6 +10,7 @@ const colors = {
   textScondary: "#555",
   white: "#FFFFFF",
   cartItemCard: "#F1dAdA",
+  pinkLight: "#F8EAEA",
   danger: "red",
   greyBold: "#9D9696",
 };
@@ -76,8 +77,6 @@ const globalStyles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.3,
     shadowRadius: 4,
-    justifyContent: "center",
-    alignItems: "center",
     elevation: 4,
   },
 });
