@@ -90,7 +90,7 @@ const BottomTab = () => {
       <Tab.Screen
         name="Notification"
         component={Notification}
-        options={{
+        options={({ navigation }) => ({
           headerTitle: "Thông báo",
           headerTitleStyle: styles.headerTitleStyle,
           headerTintColor: colors.white,
@@ -102,7 +102,7 @@ const BottomTab = () => {
               }}
             />
           ),
-          headerRight: () => <RightICon />,
+          headerRight: () => <RightICon navigation={navigation} />,
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -128,12 +128,12 @@ const BottomTab = () => {
               Notification
             </Text>
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="Account"
         component={Account}
-        options={{
+        options={({ navigation }) => ({
           headerTintColor: colors.white,
           headerTitle: "Tài khoản",
           headerTitleStyle: styles.headerTitleStyle,
@@ -145,7 +145,7 @@ const BottomTab = () => {
               }}
             />
           ),
-          headerRight: () => <RightICon />,
+          headerRight: () => <RightICon navigation={navigation} />,
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -171,20 +171,20 @@ const BottomTab = () => {
               Account
             </Text>
           ),
-        }}
+        })}
       />
     </Tab.Navigator>
   );
 };
 
-const RightICon = () => {
+const RightICon = ({ navigation }) => {
   return (
     <AntDesign
-      onPress={() => console.log("shopping cart")}
+      onPress={() => navigation.navigate("ShoppingCart")}
       name="shoppingcart"
       size={26}
       color={colors.white}
-      style={{ marginRight: 15 }}
+      style={{ marginRight: 15, padding: 10 }}
     />
   );
 };
