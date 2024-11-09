@@ -98,7 +98,7 @@ export default function Account({ navigation }) {
           <Text style={styles.txtTitle}>Lịch sử đơn hàng</Text>
         </View>
 
-        <ScrollView contentContainerStyle={styles.categoryScroll} horizontal>
+        <View style={styles.viewHistory}>
           {data.map((item, index) => (
             <View key={item.id} style={[styles.category, globalStyles.shadow]}>
               <Pressable onPress={() => navigation.navigate("Product")}>
@@ -107,7 +107,7 @@ export default function Account({ navigation }) {
               <Text style={styles.name_cate}>{item.name}</Text>
             </View>
           ))}
-        </ScrollView>
+        </View>
 
         <View style={{ flex: 1, rowGap: 5 }}>
           {items.map((item) => (
@@ -153,8 +153,8 @@ const styles = StyleSheet.create({
     color: colors.primary,
     fontWeight: "bold",
   },
-  categoryScroll: {
-    flex: 1,
+  viewHistory: {
+    flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
     padding: 10,
