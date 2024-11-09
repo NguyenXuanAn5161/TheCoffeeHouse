@@ -7,9 +7,11 @@ const colors = {
   background: "#E2E2E2",
   backgroundGrey: "#D9D9D9",
   text: "#000000",
+  textScondary: "#555",
   white: "#FFFFFF",
   cartItemCard: "#F1dAdA",
   danger: "red",
+  greyBold: "#9D9696",
 };
 
 const fontSizes = {

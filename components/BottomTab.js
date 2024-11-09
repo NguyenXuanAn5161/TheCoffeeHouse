@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const BottomTab = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Tài khoản"
+      initialRouteName="Notification"
       screenOptions={{
         tabBarActiveBackgroundColor: colors.primary,
         tabBarInactiveBackgroundColor: colors.primary,
@@ -91,6 +91,18 @@ const BottomTab = () => {
         name="Notification"
         component={Notification}
         options={{
+          headerTitle: "Thông báo",
+          headerTitleStyle: styles.headerTitleStyle,
+          headerTintColor: colors.white,
+          headerBackground: () => (
+            <View
+              style={{
+                flex: 1,
+                backgroundColor: colors.primary,
+              }}
+            />
+          ),
+          headerRight: () => <RightICon />,
           tabBarIcon: ({ color, focused }) => (
             <View
               style={[
@@ -119,10 +131,12 @@ const BottomTab = () => {
         }}
       />
       <Tab.Screen
-        name="Tài khoản"
+        name="Account"
         component={Account}
         options={{
           headerTintColor: colors.white,
+          headerTitle: "Tài khoản",
+          headerTitleStyle: styles.headerTitleStyle,
           headerBackground: () => (
             <View
               style={{
@@ -189,4 +203,5 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     marginBottom: 40,
   },
+  headerTitleStyle: { color: colors.white, fontWeight: "700" },
 });
