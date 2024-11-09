@@ -5,6 +5,7 @@ import {
   Image,
   Pressable,
   ScrollView,
+  Alert,
 } from "react-native";
 import CustomSearch from "@/components/CustomSearch";
 import { useState } from "react";
@@ -64,6 +65,14 @@ const product = [
 export default function Home({ navigation }) {
   const [dataCategory, setDataCategory] = useState(category);
   const [dataProduct, setDataProduct] = useState(product);
+
+  const handleAddToCart = (id) => {
+    Alert.alert("Success", "Thêm vào giỏ hàng thành công!");
+  };
+
+  const handleProductPress = (id) => {
+    navigation.navigate("ProductDetail");
+  };
 
   return (
     <View style={globalStyles.container}>
