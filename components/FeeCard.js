@@ -1,4 +1,3 @@
-// src/components/FeeCard.js
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";

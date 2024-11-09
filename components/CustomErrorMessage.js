@@ -1,4 +1,3 @@
-// CustomErrorMessage.js
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";

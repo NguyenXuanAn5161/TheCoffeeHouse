@@ -1,4 +1,3 @@
-// src/components/PaymentMethodDialog.js
 import { colors } from "@/styles/globalStyles";
 import React from "react";
 import { Text } from "react-native";

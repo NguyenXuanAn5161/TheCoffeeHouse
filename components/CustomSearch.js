@@ -1,4 +1,3 @@
-// components/CustomInput.js
 import React from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
