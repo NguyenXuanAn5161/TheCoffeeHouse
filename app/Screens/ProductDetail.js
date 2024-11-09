@@ -8,7 +8,7 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import { colors, globalStyles } from "@/styles/globalStyles";
+import { colors, fontSizes } from "@/styles/globalStyles";
 import {
   MaterialIcons,
   Ionicons,
@@ -69,60 +69,70 @@ const ProductDetail = () => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        {/* Image Section */}
-        <View style={styles.imageWrapper}>
-          <View style={styles.imageContainer}>
-            <Image source={img} style={styles.productImage} />
-          </View>
-        </View>
-
-        {/* Product Info */}
-        <View style={styles.infoContainer}>
-          <View style={styles.titleContainer}>
-            <Text style={styles.productTitle}>{title}</Text>
-            <View style={styles.quantityContainer}>
-              <Pressable
-                onPress={() => handleQuantityChange("decrement")}
-                style={styles.quantityButton}
-              >
-                <FontAwesome6 name="minus" size={20} color={colors.primary} />
-              </Pressable>
-              <Text style={styles.quantityText}>{quantity}</Text>
-              <Pressable
-                onPress={() => handleQuantityChange("increment")}
-                style={styles.quantityButton}
-              >
-                <FontAwesome6 name="plus" size={20} color={colors.primary} />
-              </Pressable>
+        <View style={{ rowGap: 10 }}>
+          {/* Image Section */}
+          <View style={styles.imageWrapper}>
+            <View style={styles.imageContainer}>
+              <Image source={img} style={styles.productImage} />
             </View>
           </View>
 
-          <Text style={styles.productDiscount}>{discount}</Text>
+          {/* Product Info */}
+          <View style={styles.infoContainer}>
+            <View style={styles.titleContainer}>
+              <Text style={styles.productTitle}>{title}</Text>
+              <View style={styles.quantityContainer}>
+                <Pressable
+                  onPress={() => handleQuantityChange("decrement")}
+                  style={styles.quantityButton}
+                >
+                  <FontAwesome6 name="minus" size={20} color={colors.primary} />
+                </Pressable>
+                <Text style={styles.quantityText}>{quantity}</Text>
+                <Pressable
+                  onPress={() => handleQuantityChange("increment")}
+                  style={styles.quantityButton}
+                >
+                  <FontAwesome6 name="plus" size={20} color={colors.primary} />
+                </Pressable>
+              </View>
+            </View>
 
-          {/* Action Icons */}
-          <View style={styles.iconsContainer}>
-            {["share", "heart"].map((icon, idx) => (
-              <Pressable key={idx} style={styles.iconButton}>
-                {icon === "share" ? (
-                  <MaterialIcons name={icon} size={24} color={colors.primary} />
-                ) : (
-                  <Ionicons name={icon} size={24} color={colors.primary} />
-                )}
-              </Pressable>
-            ))}
+            <Text style={styles.productDiscount}>{discount}</Text>
+
+            {/* Action Icons */}
+            <View style={styles.iconsContainer}>
+              {["share", "heart"].map((icon, idx) => (
+                <Pressable key={idx} style={styles.iconButton}>
+                  {icon === "share" ? (
+                    <MaterialIcons
+                      name={icon}
+                      size={24}
+                      color={colors.primary}
+                    />
+                  ) : (
+                    <Ionicons name={icon} size={24} color={colors.primary} />
+                  )}
+                </Pressable>
+              ))}
+            </View>
+
+            {/* Size Selection */}
+            <View style={styles.sizeContainer}>
+              <Text style={styles.sizeTitle}>Chọn Size:</Text>
+              <View style={styles.sizeOptions}>{renderSizeOptions()}</View>
+            </View>
+
+            {/* Add to Cart Button */}
+            <Pressable style={styles.addToCartButton} onPress={handleAddCart}>
+              <FontAwesome5
+                name="shopping-cart"
+                size={24}
+                color={colors.white}
+              />
+              <Text style={styles.addToCartText}>Thêm vào giỏ hàng</Text>
+            </Pressable>
           </View>
-
-          {/* Size Selection */}
-          <View style={styles.sizeContainer}>
-            <Text style={styles.sizeTitle}>Chọn Size:</Text>
-            <View style={styles.sizeOptions}>{renderSizeOptions()}</View>
-          </View>
-
-          {/* Add to Cart Button */}
-          <Pressable style={styles.addToCartButton} onPress={handleAddCart}>
-            <FontAwesome5 name="shopping-cart" size={24} color={colors.white} />
-            <Text style={styles.addToCartText}>Thêm vào giỏ hàng</Text>
-          </Pressable>
         </View>
       </ScrollView>
     </View>
@@ -161,7 +171,7 @@ const styles = StyleSheet.create({
   },
   infoContainer: {
     paddingHorizontal: 16,
-    rowGap: 16,
+    rowGap: 10,
   },
   titleContainer: {
     flexDirection: "row",
@@ -173,12 +183,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   productDiscount: {
-    fontSize: 16,
+    fontSize: fontSizes.sz16,
     color: "gray",
   },
   iconsContainer: {
     flexDirection: "row",
-    gap: 10,
+    columnGap: 10,
   },
   iconButton: {
     borderWidth: 1,
@@ -187,10 +197,10 @@ const styles = StyleSheet.create({
     borderColor: colors.primary,
   },
   sizeContainer: {
-    marginTop: 16,
+    rowGap: 10,
   },
   sizeTitle: {
-    fontSize: 18,
+    fontSize: fontSizes.sz18,
     fontWeight: "bold",
   },
   sizeOptions: {
@@ -204,6 +214,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 8,
+    justifyContent: "flex-end",
   },
   selectedSize: {
     backgroundColor: "#e0e0e0",
