@@ -125,7 +125,7 @@ const BottomTab = () => {
                 color: colors.white,
               }}
             >
-              Notification
+              Thông báo
             </Text>
           ),
         })}
@@ -168,7 +168,7 @@ const BottomTab = () => {
                 color: colors.white,
               }}
             >
-              Account
+              Tài khoản
             </Text>
           ),
         })}
