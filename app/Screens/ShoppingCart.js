@@ -11,7 +11,7 @@ import CartItemCard from "@components/CartItemCard";
 import { colors, fontSizes } from "@/styles/globalStyles";
 import { Checkbox } from "react-native-paper";
 
-const ShoppingCart = () => {
+const ShoppingCart = ({ navigation }) => {
   const [cartItems, setCartItems] = useState([
     {
       id: 4,
@@ -96,7 +96,7 @@ const ShoppingCart = () => {
           <Text style={styles.totalPrice}>50000đ</Text>
         </View>
         <TouchableOpacity
-          onPress={() => Alert.alert("Success", "Mua thành công!")}
+          onPress={() => navigation.navigate("Payment")}
           style={styles.checkoutButton}
         >
           <Text style={styles.checkoutButtonText}>Đặt hàng</Text>
