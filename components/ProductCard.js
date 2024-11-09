@@ -1,12 +1,11 @@
-// components/ProductCard.js
 import React from "react";
 import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import { colors, fontSizes } from "@/styles/globalStyles";
+import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 
 const ProductCard = ({ product, onPress, onAdd }) => {
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, globalStyles.shadow]}>
       <Pressable onPress={onPress} style={styles.product}>
         <Image source={product.img} style={styles.img_product} />
         <View style={styles.info_product}>
@@ -29,16 +28,11 @@ const ProductCard = ({ product, onPress, onAdd }) => {
 
 const styles = StyleSheet.create({
   card: {
-    width: "45%",
+    width: "100%",
     backgroundColor: colors.white,
     borderRadius: 5,
     marginBottom: 15,
     paddingBottom: 15,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 5,
-    elevation: 6,
   },
   product: {
     alignItems: "center",

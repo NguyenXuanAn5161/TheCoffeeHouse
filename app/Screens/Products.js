@@ -9,7 +9,7 @@ import {
 import React, { useState } from "react";
 import CustomSearch from "@/components/CustomSearch";
 import { colors, globalStyles } from "@/styles/globalStyles";
-import ProductCard from "@/components/ProductCart";
+import ProductCard from "@/components/ProductCard";
 
 const category = [
   { id: 1, name: "Coffee" },
