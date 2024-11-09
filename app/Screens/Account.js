@@ -100,7 +100,7 @@ export default function Account({ navigation }) {
 
         <ScrollView contentContainerStyle={styles.categoryScroll} horizontal>
           {data.map((item, index) => (
-            <View key={index} style={[styles.category, globalStyles.shadow]}>
+            <View key={item.id} style={[styles.category, globalStyles.shadow]}>
               <Pressable onPress={() => navigation.navigate("Product")}>
                 <Image source={item.img} style={styles.img_cate} />
               </Pressable>
@@ -111,8 +111,8 @@ export default function Account({ navigation }) {
 
         <View style={{ flex: 1, rowGap: 5 }}>
           {items.map((item) => (
-            <View>
-              <View key={item.id} style={styles.itemContainer} />
+            <View key={item.id}>
+              <View style={styles.itemContainer} />
               <Pressable onPress={() => navigation.navigate("Product")}>
                 <View style={styles.item}>
                   {item.icon}

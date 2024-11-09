@@ -13,7 +13,7 @@ const Tab = createBottomTabNavigator();
 const BottomTab = () => {
   return (
     <Tab.Navigator
-      initialRouteName="Notification"
+      initialRouteName="Home"
       screenOptions={{
         tabBarActiveBackgroundColor: colors.primary,
         tabBarInactiveBackgroundColor: colors.primary,

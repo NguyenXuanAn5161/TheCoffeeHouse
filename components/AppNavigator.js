@@ -41,7 +41,7 @@ const HeaderCartButton = ({ navigation }) => (
 const AppNavigator = () => {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Stack.Navigator initialRouteName="BottomTab">
+      <Stack.Navigator initialRouteName="Login">
         <Stack.Screen
           name="Login"
           component={Login}
