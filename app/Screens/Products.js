@@ -7,88 +7,114 @@ import {
   Text,
   View,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CustomSearch from "@/components/CustomSearch";
 import { colors, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
+import { getAllProduct } from "@/service/product";
 
 const category = [
   { id: 1, name: "Coffee" },
-  { id: 2, name: "Bánh ngọt" },
+  { id: 2, name: "Food" },
 ];
 
-const product = [
-  {
-    id: 1,
-    img: require("@/assets/images/capuchino.png"),
-    title: "Capuchino",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 1,
-  },
-  {
-    id: 2,
-    img: require("@/assets/images/americano.png"),
-    title: "Americano",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 1,
-  },
-  {
-    id: 3,
-    img: require("@/assets/images/mocha.png"),
-    title: "Mocha",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 1,
-  },
-  {
-    id: 4,
-    img: require("@/assets/images/vanilla.png"),
-    title: "Vanilla",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 1,
-  },
-  {
-    id: 5,
-    img: require("@/assets/images/vanilla.png"),
-    title: "Vanilla",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 1,
-  },
-  {
-    id: 6,
-    img: require("@/assets/images/vanilla.png"),
-    title: "Vanilla",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 1,
-  },
-  {
-    id: 7,
-    img: require("@/assets/images/banhmi.png"),
-    title: "Bánh mì",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 2,
-  },
-  {
-    id: 8,
-    img: require("@/assets/images/banh-mi-sung-bo.png"),
-    title: "Bánh mì",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-    categoryId: 2,
-  },
-];
+// const product = [
+//   {
+//     id: 1,
+//     img: require("@/assets/images/capuchino.png"),
+//     title: "Capuchino",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 1,
+//   },
+//   {
+//     id: 2,
+//     img: require("@/assets/images/americano.png"),
+//     title: "Americano",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 1,
+//   },
+//   {
+//     id: 3,
+//     img: require("@/assets/images/mocha.png"),
+//     title: "Mocha",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 1,
+//   },
+//   {
+//     id: 4,
+//     img: require("@/assets/images/vanilla.png"),
+//     title: "Vanilla",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 1,
+//   },
+//   {
+//     id: 5,
+//     img: require("@/assets/images/vanilla.png"),
+//     title: "Vanilla",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 1,
+//   },
+//   {
+//     id: 6,
+//     img: require("@/assets/images/vanilla.png"),
+//     title: "Vanilla",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 1,
+//   },
+//   {
+//     id: 7,
+//     img: require("@/assets/images/banhmi.png"),
+//     title: "Bánh mì",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 2,
+//   },
+//   {
+//     id: 8,
+//     img: require("@/assets/images/banh-mi-sung-bo.png"),
+//     title: "Bánh mì",
+//     price: "đ35.000",
+//     discount: "With chocolate and milk",
+//     categoryId: 2,
+//   },
+// ];
 
 const Products = ({ navigation }) => {
-  const [selectedCategory, setSelectedCategory] = useState(category[0].id);
+  const [product, setProduct] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(category[0].name);
+  const [loadding, setLoadding] = useState(false);
 
   const handleProductPress = (id) => {
     navigation.navigate("ProductDetail", { id });
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  useEffect(() => {
+    console.log("product useState: ", product);
+  }, [product]);
+
+  const getProducts = async () => {
+    setLoadding(true);
+    try {
+      const res = await getAllProduct();
+      console.log("data: ", res.data);
+      if (res.success) {
+        setProduct(res.data);
+      }
+    } catch (error) {
+      console.log("Error file Product: ", error);
+    } finally {
+      setLoadding(false);
+    }
   };
 
   const handleAddToCart = (id) => {
@@ -102,7 +128,7 @@ const Products = ({ navigation }) => {
 
   // Lọc sản phẩm dựa trên category được chọn
   const filteredProducts = product.filter(
-    (item) => item.categoryId === selectedCategory
+    (item) => item.category === selectedCategory
   );
 
   return (
@@ -114,11 +140,11 @@ const Products = ({ navigation }) => {
         <View style={styles.mainContent}>
           <ScrollView contentContainerStyle={styles.categoryScroll} horizontal>
             {category.map((item) => {
-              const isSelected = selectedCategory === item.id;
+              const isSelected = selectedCategory === item.name;
               return (
                 <Pressable
                   key={item.id}
-                  onPress={() => handleCategoryPress(item.id)}
+                  onPress={() => handleCategoryPress(item.name)}
                   style={[
                     styles.category,
                     {

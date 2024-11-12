@@ -7,10 +7,10 @@ const ProductCard = ({ product, onPress, onAdd }) => {
   return (
     <View style={[styles.card, globalStyles.shadow]}>
       <Pressable onPress={onPress} style={styles.product}>
-        <Image source={product.img} style={styles.img_product} />
+        <Image source={{ uri: product.imageUrl }} style={styles.img_product} />
         <View style={styles.info_product}>
-          <Text style={styles.title_product}>{product.title}</Text>
-          <Text style={styles.discount_product}>{product.discount}</Text>
+          <Text style={styles.title_product}>{product.name}</Text>
+          <Text style={styles.discount_product}>{product.description}</Text>
           <Text style={styles.price_product}>{product.price}</Text>
         </View>
       </Pressable>
