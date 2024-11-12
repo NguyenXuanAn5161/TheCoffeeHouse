@@ -15,17 +15,40 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { register } from "@/service/auth";
+import Toast from "react-native-toast-message";
 
 const Register = ({ navigation }) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
-
+  const [loading, setLoading] = useState(false);
   const handleLogin = () => {
     navigation.navigate("Login");
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    // Logic xử lý đăng nhập tại đây
+  const handleSubmit = async (values) => {
+    setLoading(true); // Bắt đầu loading
+    try {
+      const res = await register(values.username, values.password);
+      console.log("Response: ", res);
+      if (res.success) {
+        Toast.show({
+          type: "success",
+          text1: "Đăng ký thành công",
+          text2: "Đăng nhập để tiếp tục!",
+        });
+        navigation.navigate("Login");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Đăng ký thất bại",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file register: ", error);
+    } finally {
+      setLoading(false); // Kết thúc loading
+    }
   };
 
   return (
@@ -72,7 +95,11 @@ const Register = ({ navigation }) => {
                 <CustomErrorMessage msg={touched.password && errors.password} />
               </View>
               <View style={{ width: "90%" }}>
-                <CustomButton title="Đăng ký" onPress={handleSubmit} />
+                <CustomButton
+                  loading={loading}
+                  title="Đăng ký"
+                  onPress={() => handleSubmit()}
+                />
               </View>
               <View
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}

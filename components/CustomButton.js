@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 
-const CustomButton = ({ title, onPress }) => (
+const CustomButton = ({ title, onPress, loading = false }) => (
   <Button
     buttonColor={colors.primary}
     contentStyle={styles.buttonContent}
@@ -11,6 +11,8 @@ const CustomButton = ({ title, onPress }) => (
     style={[styles.button, globalStyles.shadow]}
     mode="contained"
     onPress={onPress}
+    loading={loading}
+    disabled={loading}
   >
     {title}
   </Button>

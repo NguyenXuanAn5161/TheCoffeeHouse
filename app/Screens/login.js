@@ -15,17 +15,41 @@ import CustomInput from "@components/CustomInput";
 import CustomButton from "@components/CustomButton";
 import validationSchema from "@/utils/validation";
 import CustomErrorMessage from "@components/CustomErrorMessage";
+import { login } from "@/service/auth";
+import Toast from "react-native-toast-message";
 
 const LoginScreen = ({ navigation }) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
+  const [loadding, setLoadding] = useState(false);
 
   const handleRegister = () => {
     navigation.navigate("Register");
   };
 
-  const handleSubmit = (values) => {
-    console.log(values);
-    navigation.navigate("BottomTab");
+  const handleSubmit = async (values) => {
+    setLoadding(true);
+    try {
+      const res = await login(values.username, values.password);
+      console.log("res login: ", res);
+      if (res.success) {
+        Toast.show({
+          type: "success",
+          text1: "Đăng nhập thành công",
+          text2: "Chào mừng bạn đến với Coffee",
+        });
+        navigation.navigate("BottomTab");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Đăng nhập thất bại",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file login: ", error);
+    } finally {
+      setLoadding(false);
+    }
     // Logic xử lý đăng nhập tại đây
   };
 
@@ -75,7 +99,11 @@ const LoginScreen = ({ navigation }) => {
               </View>
 
               <View style={{ width: "90%" }}>
-                <CustomButton title="Đăng nhập" onPress={handleSubmit} />
+                <CustomButton
+                  loading={loadding}
+                  title="Đăng nhập"
+                  onPress={() => handleSubmit()}
+                />
               </View>
               <View
                 style={{ flexDirection: "row", gap: 10, alignItems: "center" }}
