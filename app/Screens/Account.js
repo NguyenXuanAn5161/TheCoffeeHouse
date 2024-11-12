@@ -14,6 +14,9 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
+import CustomButton from "@/components/CustomButton";
+import { useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const data = [
   { id: 1, name: "Đã xác nhận", img: require("@/assets/images/hoa_don.png") },
@@ -77,7 +80,31 @@ const items = [
   },
 ];
 
+const user = {
+  username: "Khá",
+  phone: "0334863502",
+};
+
 export default function Account({ navigation }) {
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const data = JSON.parse(userData);
+      setUser(data);
+      console.log("Thông tin người dùng: ", data);
+    }
+  };
+
+  const handleLogout = async () => {
+    await AsyncStorage.removeItem("user");
+    navigation.navigate("Login");
+  };
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{ rowGap: 15 }}>
@@ -85,10 +112,10 @@ export default function Account({ navigation }) {
           <View style={styles.divider} />
           <View>
             <Text style={[styles.txtTitle, { fontSize: fontSizes.medium }]}>
-              Khá
+              {user?.username}
             </Text>
             <Text style={[styles.txtTitle, { fontWeight: "400" }]}>
-              0334863503
+              {user?.phone}
             </Text>
           </View>
         </View>
@@ -121,6 +148,10 @@ export default function Account({ navigation }) {
               </Pressable>
             </View>
           ))}
+        </View>
+
+        <View style={{ width: "90%", alignSelf: "center" }}>
+          <CustomButton title={"Đăng xuất"} onPress={() => handleLogout()} />
         </View>
       </ScrollView>
     </View>

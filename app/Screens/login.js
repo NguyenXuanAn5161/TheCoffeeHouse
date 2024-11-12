@@ -17,6 +17,7 @@ import validationSchema from "@/utils/validation";
 import CustomErrorMessage from "@components/CustomErrorMessage";
 import { login } from "@/service/auth";
 import Toast from "react-native-toast-message";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const LoginScreen = ({ navigation }) => {
   const [passwordVisible, setPasswordVisible] = useState(true);
@@ -32,6 +33,9 @@ const LoginScreen = ({ navigation }) => {
       const res = await login(values.username, values.password);
       console.log("res login: ", res);
       if (res.success) {
+        // lưu vào storage
+        await AsyncStorage.setItem("user", JSON.stringify(res.data));
+
         Toast.show({
           type: "success",
           text1: "Đăng nhập thành công",
@@ -50,7 +54,6 @@ const LoginScreen = ({ navigation }) => {
     } finally {
       setLoadding(false);
     }
-    // Logic xử lý đăng nhập tại đây
   };
 
   return (
