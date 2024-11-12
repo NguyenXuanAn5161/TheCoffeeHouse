@@ -8,10 +8,11 @@ import {
   Alert,
 } from "react-native";
 import CustomSearch from "@/components/CustomSearch";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
 import CustomBanner from "@/components/CustomBanner";
+import { getAllProduct } from "@/service/product";
 
 const category = [
   {
@@ -21,7 +22,7 @@ const category = [
   },
   {
     id: 2,
-    name: "Cookies",
+    name: "Food",
     img: require("@/assets/images/banhmi.png"),
   },
   {
@@ -31,47 +32,36 @@ const category = [
   },
 ];
 
-const product = [
-  {
-    id: 1,
-    img: require("@/assets/images/capuchino.png"),
-    title: "Capuchino",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-  },
-  {
-    id: 2,
-    img: require("@/assets/images/americano.png"),
-    title: "Americano",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-  },
-  {
-    id: 3,
-    img: require("@/assets/images/mocha.png"),
-    title: "Mocha",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-  },
-  {
-    id: 4,
-    img: require("@/assets/images/vanilla.png"),
-    title: "Vanilla",
-    price: "đ35.000",
-    discount: "With chocolate and milk",
-  },
-];
-
 export default function Home({ navigation }) {
   const [dataCategory, setDataCategory] = useState(category);
-  const [dataProduct, setDataProduct] = useState(product);
+  const [product, setProduct] = useState([]);
+  const [loadding, setLoadding] = useState(false);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  const getProducts = async () => {
+    setLoadding(true);
+    try {
+      const res = await getAllProduct();
+      console.log("data: ", res.data);
+      if (res.success) {
+        setProduct(res.data);
+      }
+    } catch (error) {
+      console.log("Error file Product: ", error);
+    } finally {
+      setLoadding(false);
+    }
+  };
 
   const handleAddToCart = (id) => {
     Alert.alert("Success", "Thêm vào giỏ hàng thành công!");
   };
 
   const handleProductPress = (id) => {
-    navigation.navigate("ProductDetail");
+    navigation.navigate("ProductDetail", { id });
   };
 
   return (
@@ -112,7 +102,7 @@ export default function Home({ navigation }) {
             <Text style={styles.text_title_product}>Sản phẩm mới</Text>
 
             <View style={styles.viewProduct}>
-              {dataProduct.map((item, index) => (
+              {product.map((item, index) => (
                 <View key={item.id} style={{ width: "45%" }}>
                   <ProductCard
                     product={item}
