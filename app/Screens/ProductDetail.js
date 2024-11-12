@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -15,25 +15,47 @@ import {
   FontAwesome6,
   FontAwesome5,
 } from "@expo/vector-icons";
+import { getProductById } from "@/service/product";
+import Toast from "react-native-toast-message";
 
-const product = {
-  id: 4,
-  img: require("@/assets/images/vanilla.png"),
-  title: "Vanilla",
-  price: "đ35.000",
-  discount: "With chocolate and milk",
-  categoryId: 1,
-  sizes: [
-    { size: "S", price: "30.000đ" },
-    { size: "M", price: "35.000đ" },
-    { size: "L", price: "40.000đ" },
-  ],
-};
-
-const ProductDetail = () => {
-  const { img, title, discount, sizes, id } = product;
+const ProductDetail = ({ route }) => {
   const [quantity, setQuantity] = useState(1);
-  const [selectedSize, setSelectedSize] = useState(sizes[0]);
+  const [product, setProduct] = useState(null);
+  const [sizes, setSizes] = useState([]);
+  const [selectedSize, setSelectedSize] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { id } = route.params;
+
+  useEffect(() => {
+    getProduct(id);
+  }, [id]);
+
+  const getProduct = async (id) => {
+    setLoading(true);
+    try {
+      const res = await getProductById(id);
+      if (res.success) {
+        const { sizePrice } = res.data;
+        const sortedSizes = ["S", "M", "L"].map((size) => ({
+          size,
+          price: `${sizePrice[size].toLocaleString()}đ`,
+        }));
+        setProduct(res.data);
+        setSizes(sortedSizes);
+        setSelectedSize(sortedSizes[0]);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Chi tiết sản phẩm",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file product detail: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleQuantityChange = (type) => {
     setQuantity((prevQuantity) =>
@@ -42,14 +64,14 @@ const ProductDetail = () => {
   };
 
   const handleAddCart = () => {
-    Alert.alert("Success", `Thêm thành công! ${id}`);
+    Alert.alert("Success", `Thêm thành công ${product.name}!`);
   };
 
   const renderSizeOptions = () =>
     sizes.map((sizeOption, index) => {
       const imageSize =
         sizeOption.size === "S" ? 40 : sizeOption.size === "M" ? 50 : 60;
-      const isSelected = selectedSize.size === sizeOption.size;
+      const isSelected = selectedSize?.size === sizeOption.size;
       return (
         <Pressable
           key={index}
@@ -66,21 +88,26 @@ const ProductDetail = () => {
       );
     });
 
+  if (!product) return null;
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={{ rowGap: 10 }}>
           {/* Image Section */}
-          <View style={styles.imageWrapper}>
+          <View style={[styles.imageWrapper, { flex: 3 / 5 }]}>
             <View style={styles.imageContainer}>
-              <Image source={img} style={styles.productImage} />
+              <Image
+                source={{ uri: product.imageUrl }}
+                style={styles.productImage}
+              />
             </View>
           </View>
 
           {/* Product Info */}
-          <View style={styles.infoContainer}>
+          <View style={[styles.infoContainer, { flex: 2 / 5 }]}>
             <View style={styles.titleContainer}>
-              <Text style={styles.productTitle}>{title}</Text>
+              <Text style={styles.productTitle}>{product.name}</Text>
               <View style={styles.quantityContainer}>
                 <Pressable
                   onPress={() => handleQuantityChange("decrement")}
@@ -98,7 +125,7 @@ const ProductDetail = () => {
               </View>
             </View>
 
-            <Text style={styles.productDiscount}>{discount}</Text>
+            <Text style={styles.productDiscount}>{product.description}</Text>
 
             {/* Action Icons */}
             <View style={styles.iconsContainer}>

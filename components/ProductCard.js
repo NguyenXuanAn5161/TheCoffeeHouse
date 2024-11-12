@@ -4,6 +4,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 
 const ProductCard = ({ product, onPress, onAdd }) => {
+  console.log("ốdf", product);
   return (
     <View style={[styles.card, globalStyles.shadow]}>
       <Pressable onPress={onPress} style={styles.product}>
@@ -11,7 +12,11 @@ const ProductCard = ({ product, onPress, onAdd }) => {
         <View style={styles.info_product}>
           <Text style={styles.title_product}>{product.name}</Text>
           <Text style={styles.discount_product}>{product.description}</Text>
-          <Text style={styles.price_product}>{product.price}</Text>
+          <Text style={styles.price_product}>
+            {product.sizePrice.S
+              ? `${product.sizePrice.S.toLocaleString()}đ`
+              : "Liên hệ"}
+          </Text>
         </View>
       </Pressable>
       <Pressable onPress={onAdd} style={styles.btn_add}>

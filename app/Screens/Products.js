@@ -98,10 +98,6 @@ const Products = ({ navigation }) => {
     getProducts();
   }, []);
 
-  useEffect(() => {
-    console.log("product useState: ", product);
-  }, [product]);
-
   const getProducts = async () => {
     setLoadding(true);
     try {
