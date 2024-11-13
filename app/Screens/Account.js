@@ -1,4 +1,5 @@
 import {
+  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -12,6 +13,7 @@ import {
   FontAwesome6,
   MaterialCommunityIcons,
   MaterialIcons,
+  FontAwesome5,
 } from "@expo/vector-icons";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import CustomButton from "@/components/CustomButton";
@@ -46,14 +48,8 @@ const items = [
   },
   {
     id: 4,
-    name: "Ví voucher",
-    icon: (
-      <MaterialCommunityIcons
-        name="ticket-percent-outline"
-        size={24}
-        color={colors.primary}
-      />
-    ),
+    name: "Đánh giá ứng dụng",
+    icon: <FontAwesome6 name="star" size={24} color={colors.primary} />,
   },
   {
     id: 5,
@@ -75,15 +71,11 @@ const items = [
   },
   {
     id: 7,
-    name: "Đánh giá ứng dụng",
-    icon: <FontAwesome6 name="star" size={24} color={colors.primary} />,
+    name: "Cập nhật thông tin",
+    icon: <FontAwesome5 name="user-cog" size={24} color={colors.primary} />,
+    navigate: "UpdateUser",
   },
 ];
-
-const user = {
-  username: "Khá",
-  phone: "0334863502",
-};
 
 export default function Account({ navigation }) {
   const [user, setUser] = useState();
@@ -105,18 +97,31 @@ export default function Account({ navigation }) {
     await AsyncStorage.removeItem("user");
     navigation.navigate("Login");
   };
+
+  const handleUpdateUser = (user) => {
+    navigation.navigate("UpdateUser", { user });
+  };
+
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{ rowGap: 15 }}>
         <View style={styles.header}>
           <View style={styles.divider} />
           <View>
-            <Text style={[styles.txtTitle, { fontSize: fontSizes.medium }]}>
-              {user?.username}
-            </Text>
-            <Text style={[styles.txtTitle, { fontWeight: "400" }]}>
-              {user?.phone}
-            </Text>
+            {!user?.fullName ? (
+              <Pressable onPress={() => handleUpdateUser(user)}>
+                <Text style={styles.txtUpdate}>Cập nhật thông tin</Text>
+              </Pressable>
+            ) : (
+              <Pressable onPress={() => handleUpdateUser(user)}>
+                <Text style={[styles.txtTitle, { fontSize: fontSizes.medium }]}>
+                  {user?.fullName ?? "Cập nhật"}
+                </Text>
+                <Text style={[styles.txtTitle, { fontWeight: "400" }]}>
+                  {user?.phoneNumber}
+                </Text>
+              </Pressable>
+            )}
           </View>
         </View>
 
@@ -128,7 +133,11 @@ export default function Account({ navigation }) {
         <View style={styles.viewHistory}>
           {data.map((item, index) => (
             <View key={item.id} style={[styles.category, globalStyles.shadow]}>
-              <Pressable onPress={() => navigation.navigate("Product")}>
+              <Pressable
+                onPress={() =>
+                  item?.navigate && navigation.navigate(item.navigate)
+                }
+              >
                 <Image source={item.img} style={styles.img_cate} />
               </Pressable>
               <Text style={styles.name_cate}>{item.name}</Text>
@@ -140,7 +149,11 @@ export default function Account({ navigation }) {
           {items.map((item) => (
             <View key={item.id}>
               <View style={styles.itemContainer} />
-              <Pressable onPress={() => navigation.navigate("Product")}>
+              <Pressable
+                onPress={() =>
+                  item?.navigate && navigation.navigate(item.navigate)
+                }
+              >
                 <View style={styles.item}>
                   {item.icon}
                   <Text style={styles.txtItems}>{item.name}</Text>
@@ -224,4 +237,5 @@ const styles = StyleSheet.create({
     fontSize: fontSizes.sz16,
     fontWeight: "700",
   },
+  txtUpdate: { color: colors.danger, fontSize: fontSizes.sz16 },
 });
