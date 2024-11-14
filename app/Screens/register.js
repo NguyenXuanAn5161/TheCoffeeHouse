@@ -3,7 +3,7 @@ import CustomButton from "@components/CustomButton";
 import CustomErrorMessage from "@components/CustomErrorMessage";
 import CustomInput from "@components/CustomInput";
 import { fontSizes, globalStyles } from "@/styles/globalStyles";
-import validationSchema from "@/utils/validation";
+import { validationLoginRegister } from "@/utils/validation";
 import { Field, Formik } from "formik";
 import { useState } from "react";
 import {
@@ -54,7 +54,7 @@ const Register = ({ navigation }) => {
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
-      validationSchema={validationSchema}
+      validationSchema={validationLoginRegister}
       onSubmit={handleSubmit}
     >
       {({ handleSubmit, errors, touched }) => {

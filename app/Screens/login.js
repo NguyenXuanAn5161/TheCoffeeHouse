@@ -13,7 +13,7 @@ import logoCoffee from "@/assets/images/TheCoffeHouse.png";
 import { fontSizes, globalStyles } from "@/styles/globalStyles";
 import CustomInput from "@components/CustomInput";
 import CustomButton from "@components/CustomButton";
-import validationSchema from "@/utils/validation";
+import { validationLoginRegister } from "@/utils/validation";
 import CustomErrorMessage from "@components/CustomErrorMessage";
 import { login } from "@/service/auth";
 import Toast from "react-native-toast-message";
@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
-      validationSchema={validationSchema}
+      validationSchema={validationLoginRegister}
       onSubmit={handleSubmit}
     >
       {({ handleSubmit, errors, touched }) => {
