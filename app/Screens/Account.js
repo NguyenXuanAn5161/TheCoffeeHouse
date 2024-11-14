@@ -8,9 +8,10 @@ import {
 } from "react-native";
 import { Foundation } from "@expo/vector-icons";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import AccountItem from "@/components/AccountItem";
+import { useFocusEffect } from "@react-navigation/native";
 
 const data = [
   { id: 1, name: "Đã xác nhận", img: require("@/assets/images/hoa_don.png") },
@@ -25,9 +26,11 @@ const data = [
 export default function Account({ navigation }) {
   const [user, setUser] = useState();
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserData();
+    }, [])
+  );
 
   const getUserData = async () => {
     const userData = await AsyncStorage.getItem("user");
@@ -86,7 +89,7 @@ export default function Account({ navigation }) {
         </View>
 
         <View style={{ flex: 1, rowGap: 5 }}>
-          <AccountItem navigation={navigation} />
+          <AccountItem userData={user} navigation={navigation} />
         </View>
       </ScrollView>
     </View>
