@@ -50,18 +50,17 @@ const items = [
       />
     ),
   },
-  {
-    id: 7,
-    name: "Cập nhật thông tin",
-    icon: <FontAwesome5 name="user-cog" size={24} color={colors.primary} />,
-    navigate: "UpdateUser",
-  },
 ];
 
-const AccountItem = ({ navigation }) => {
+const AccountItem = ({ userData, navigation }) => {
   const handleLogout = async () => {
     await AsyncStorage.removeItem("user");
     navigation.navigate("Login");
+  };
+
+  const handleUpdateUser = (user) => {
+    console.log("data ac item: ", user);
+    navigation.navigate("UpdateUser", { user });
   };
 
   return (
@@ -79,6 +78,17 @@ const AccountItem = ({ navigation }) => {
           </Pressable>
         </View>
       ))}
+      <View>
+        <View style={styles.itemLine} />
+        <Pressable onPress={() => handleUpdateUser(userData)}>
+          <View style={styles.item}>
+            <View style={{ width: 35 }}>
+              <FontAwesome5 name="user-cog" size={24} color={colors.primary} />
+            </View>
+            <Text style={styles.txtItems}>Cập nhật thông tin</Text>
+          </View>
+        </Pressable>
+      </View>
       <View>
         <View style={styles.itemLine} />
         <Pressable onPress={() => handleLogout()}>
