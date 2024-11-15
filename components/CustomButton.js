@@ -3,7 +3,7 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Button } from "react-native-paper";
 
-const CustomButton = ({ title, onPress, loading = false }) => (
+const CustomButton = ({ title, onPress, loading = false, icon }) => (
   <Button
     buttonColor={colors.primary}
     contentStyle={styles.buttonContent}
@@ -13,6 +13,7 @@ const CustomButton = ({ title, onPress, loading = false }) => (
     onPress={onPress}
     loading={loading}
     disabled={loading}
+    icon={icon}
   >
     {title}
   </Button>
