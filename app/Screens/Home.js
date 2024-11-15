@@ -40,7 +40,6 @@ export default function Home({ navigation }) {
   const [dataCategory, setDataCategory] = useState(category);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
-
   const [user, setUser] = useState();
 
   useFocusEffect(
@@ -80,12 +79,7 @@ export default function Home({ navigation }) {
   const handleAddToCart = async (productId) => {
     setLoading(true);
     try {
-      const res = await addShoppingCart(
-        user.id,
-        productId,
-        (size = "S"),
-        (quantity = "1")
-      );
+      const res = await addShoppingCart(user.id, productId, "S", "1");
       console.log("data: ", res.data);
       if (res.success) {
         Toast.show({

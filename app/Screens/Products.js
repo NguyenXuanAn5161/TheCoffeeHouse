@@ -12,6 +12,10 @@ import CustomSearch from "@/components/CustomSearch";
 import { colors, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
 import { getAllProduct } from "@/service/product";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { addShoppingCart } from "@/service/shoppingCart";
+import Toast from "react-native-toast-message";
 
 const category = [
   { id: 1, name: "Coffee" },
@@ -88,7 +92,23 @@ const category = [
 const Products = ({ navigation }) => {
   const [product, setProduct] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(category[0].name);
-  const [loadding, setLoadding] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserData();
+    }, [])
+  );
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const data = JSON.parse(userData);
+      setUser(data);
+      console.log("Thông tin người dùng: ", data);
+    }
+  };
 
   const handleProductPress = (id) => {
     navigation.navigate("ProductDetail", { id });
@@ -99,7 +119,7 @@ const Products = ({ navigation }) => {
   }, []);
 
   const getProducts = async () => {
-    setLoadding(true);
+    setLoading(true);
     try {
       const res = await getAllProduct();
       console.log("data: ", res.data);
@@ -109,13 +129,33 @@ const Products = ({ navigation }) => {
     } catch (error) {
       console.log("Error file Product: ", error);
     } finally {
-      setLoadding(false);
+      setLoading(false);
     }
   };
 
-  const handleAddToCart = (id) => {
-    Alert.alert("Success", "Thêm vào giỏ hàng thành công!");
-    navigation.navigate("ShoppingCart", { id });
+  const handleAddToCart = async (productId) => {
+    setLoading(true);
+    try {
+      const res = await addShoppingCart(user.id, productId, "S", "1");
+      console.log("data: ", res.data);
+      if (res.success) {
+        Toast.show({
+          type: "success",
+          text1: "Thành công",
+          text2: res.message,
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Thất bại",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file Home", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleCategoryPress = (id) => {

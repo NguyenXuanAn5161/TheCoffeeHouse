@@ -17,6 +17,10 @@ import {
 } from "@expo/vector-icons";
 import { getProductById } from "@/service/product";
 import Toast from "react-native-toast-message";
+import { addShoppingCart } from "@/service/shoppingCart";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import CustomButton from "@/components/CustomButton";
 
 const ProductDetail = ({ route }) => {
   const [quantity, setQuantity] = useState(1);
@@ -25,6 +29,22 @@ const ProductDetail = ({ route }) => {
   const [selectedSize, setSelectedSize] = useState(null);
   const [loading, setLoading] = useState(false);
   const { id } = route.params;
+  const [user, setUser] = useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserData();
+    }, [])
+  );
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const data = JSON.parse(userData);
+      setUser(data);
+      console.log("Thông tin người dùng: ", data);
+    }
+  };
 
   useEffect(() => {
     getProduct(id);
@@ -63,8 +83,34 @@ const ProductDetail = ({ route }) => {
     );
   };
 
-  const handleAddCart = () => {
-    Alert.alert("Success", `Thêm thành công ${product.name}!`);
+  const handleAddToCart = async () => {
+    setLoading(true);
+    try {
+      const res = await addShoppingCart(
+        user.id,
+        product.id,
+        selectedSize.size,
+        quantity
+      );
+      console.log("data: ", res.data);
+      if (res.success) {
+        Toast.show({
+          type: "success",
+          text1: "Thành công",
+          text2: res.message,
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Thất bại",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file Home", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const renderSizeOptions = () =>
@@ -151,14 +197,18 @@ const ProductDetail = ({ route }) => {
             </View>
 
             {/* Add to Cart Button */}
-            <Pressable style={styles.addToCartButton} onPress={handleAddCart}>
-              <FontAwesome5
-                name="shopping-cart"
-                size={24}
-                color={colors.white}
-              />
-              <Text style={styles.addToCartText}>Thêm vào giỏ hàng</Text>
-            </Pressable>
+            <CustomButton
+              loading={loading}
+              title={"Thêm vào giỏ hàng"}
+              onPress={handleAddToCart}
+              icon={() => (
+                <FontAwesome5
+                  name="shopping-cart"
+                  size={24}
+                  color={colors.white}
+                />
+              )}
+            />
           </View>
         </View>
       </ScrollView>
@@ -267,21 +317,5 @@ const styles = StyleSheet.create({
   quantityText: {
     marginHorizontal: 12,
     fontSize: 18,
-  },
-  addToCartButton: {
-    marginTop: 20,
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    backgroundColor: colors.primary,
-    borderRadius: 8,
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  addToCartText: {
-    color: "#fff",
-    fontSize: 18,
-    fontWeight: "bold",
-    marginLeft: 10,
   },
 });
