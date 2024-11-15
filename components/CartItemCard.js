@@ -1,16 +1,29 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox } from "react-native-paper";
 import { FontAwesome6, Feather } from "@expo/vector-icons";
 import { colors } from "@/styles/globalStyles";
 
-const CartItemCard = ({ product, onRemove, isChecked, onCheck }) => {
-  const [quantity, setQuantity] = useState(1);
+const CartItemCard = ({
+  product,
+  onRemove,
+  isChecked,
+  onCheck,
+  onQuantityChange,
+}) => {
+  const [quantity, setQuantity] = useState(product.quantity || 1);
+
+  useEffect(() => {
+    setQuantity(product.quantity);
+  }, [product]);
 
   const handleQuantityChange = (type) => {
-    setQuantity((prevQuantity) =>
-      type === "increment" ? prevQuantity + 1 : Math.max(1, prevQuantity - 1)
-    );
+    const newQuantity =
+      type === "increment" ? quantity + 1 : Math.max(1, quantity - 1);
+    setQuantity(newQuantity);
+
+    // Gọi hàm `onQuantityChange` để cập nhật số lượng sản phẩm lên ShoppingCart
+    onQuantityChange(product.id, newQuantity);
   };
 
   return (
@@ -23,13 +36,18 @@ const CartItemCard = ({ product, onRemove, isChecked, onCheck }) => {
       />
 
       {/* Product image */}
-      <Image source={product.img} style={styles.productImage} />
+      <Image source={{ uri: product.imageUrl }} style={styles.productImage} />
 
       {/* Product info */}
       <View style={styles.productInfo}>
-        <Text style={styles.productTitle}>{product.title}</Text>
+        <Text style={styles.productTitle}>{product.productName}</Text>
         <Text style={styles.productPrice}>{product.price}</Text>
-        <Text style={styles.productSize}>Size: {product.selectedSize}</Text>
+        <Text style={styles.productSize}>
+          Size:{" "}
+          <Text style={{ fontWeight: "700", color: colors.primary }}>
+            {product.size}
+          </Text>
+        </Text>
 
         {/* Quantity control */}
         <View style={styles.quantityContainer}>
