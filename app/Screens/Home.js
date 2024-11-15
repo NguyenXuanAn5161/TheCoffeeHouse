@@ -8,11 +8,15 @@ import {
   Alert,
 } from "react-native";
 import CustomSearch from "@/components/CustomSearch";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
 import CustomBanner from "@/components/CustomBanner";
 import { getAllProduct } from "@/service/product";
+import { addShoppingCart } from "@/service/shoppingCart";
+import Toast from "react-native-toast-message";
+import { useFocusEffect } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const category = [
   {
@@ -35,14 +39,31 @@ const category = [
 export default function Home({ navigation }) {
   const [dataCategory, setDataCategory] = useState(category);
   const [product, setProduct] = useState([]);
-  const [loadding, setLoadding] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const [user, setUser] = useState();
+
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserData();
+    }, [])
+  );
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const data = JSON.parse(userData);
+      setUser(data);
+      console.log("Thông tin người dùng: ", data);
+    }
+  };
 
   useEffect(() => {
     getProducts();
   }, []);
 
   const getProducts = async () => {
-    setLoadding(true);
+    setLoading(true);
     try {
       const res = await getAllProduct();
       console.log("data: ", res.data);
@@ -50,14 +71,40 @@ export default function Home({ navigation }) {
         setProduct(res.data);
       }
     } catch (error) {
-      console.log("Error file Product: ", error);
+      console.log("Error file Home: ", error);
     } finally {
-      setLoadding(false);
+      setLoading(false);
     }
   };
 
-  const handleAddToCart = (id) => {
-    Alert.alert("Success", "Thêm vào giỏ hàng thành công!");
+  const handleAddToCart = async (productId) => {
+    setLoading(true);
+    try {
+      const res = await addShoppingCart(
+        user.id,
+        productId,
+        (size = "S"),
+        (quantity = "1")
+      );
+      console.log("data: ", res.data);
+      if (res.success) {
+        Toast.show({
+          type: "success",
+          text1: "Thành công",
+          text2: res.message,
+        });
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Thất bại",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file Home", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleProductPress = (id) => {
