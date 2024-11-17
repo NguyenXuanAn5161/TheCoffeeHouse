@@ -4,10 +4,12 @@ import { globalStyles, colors, fontSizes } from "@/styles/globalStyles";
 
 const CartItemPayment = ({ item }) => (
   <View style={[styles.cartItem, globalStyles.shadow]}>
-    <Image source={item.image} style={styles.image} />
+    <Image source={{ uri: item.imageUrl }} style={styles.image} />
     <View style={styles.itemDetails}>
-      <Text style={styles.itemName}>{item.name}</Text>
-      <Text style={styles.itemSize}>Size: {item.size}</Text>
+      <Text style={styles.itemName}>{item.productName}</Text>
+      <Text style={styles.itemSize}>
+        Size: <Text style={{ fontWeight: "700" }}>{item.size}</Text>
+      </Text>
       <Text style={styles.itemPrice}>
         {item.price.toLocaleString("vi-VN")}đ
       </Text>
