@@ -5,7 +5,7 @@ import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 const FeeCard = ({ fee, label }) => (
   <View style={[styles.feeContainer, globalStyles.shadow]}>
     <Text style={styles.feeText}>{label}:</Text>
-    <Text style={styles.feePrice}>{fee.toLocaleString()} VND</Text>
+    <Text style={styles.feePrice}>{fee.toLocaleString("vi-VN")}đ</Text>
   </View>
 );
 

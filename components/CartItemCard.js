@@ -41,7 +41,9 @@ const CartItemCard = ({
       {/* Product info */}
       <View style={styles.productInfo}>
         <Text style={styles.productTitle}>{product.productName}</Text>
-        <Text style={styles.productPrice}>{product.price}</Text>
+        <Text style={styles.productPrice}>
+          {product.price.toLocaleString("vi-VN")}đ
+        </Text>
         <Text style={styles.productSize}>
           Size:{" "}
           <Text style={{ fontWeight: "700", color: colors.primary }}>

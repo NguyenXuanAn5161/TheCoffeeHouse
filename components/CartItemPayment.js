@@ -8,7 +8,9 @@ const CartItemPayment = ({ item }) => (
     <View style={styles.itemDetails}>
       <Text style={styles.itemName}>{item.name}</Text>
       <Text style={styles.itemSize}>Size: {item.size}</Text>
-      <Text style={styles.itemPrice}>{item.price.toLocaleString()} VND</Text>
+      <Text style={styles.itemPrice}>
+        {item.price.toLocaleString("vi-VN")}đ
+      </Text>
     </View>
     <Text style={styles.itemQuantity}>Số lượng: {item.quantity}</Text>
   </View>
