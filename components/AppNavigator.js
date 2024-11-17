@@ -10,6 +10,7 @@ import { colors, globalStyles } from "@/styles/globalStyles";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Payment from "@/app/screens/Payment";
 import UpdateUser from "@/app/screens/UpdateUser";
+import HistoryOrder from "@/app/screens/HistoryOrder";
 
 const Stack = createStackNavigator();
 
@@ -101,6 +102,22 @@ const AppNavigator = () => {
           component={UpdateUser}
           options={({ navigation }) => ({
             headerTitle: "Thông tin",
+            headerTitleStyle: styles.headerTitleStyle,
+            headerStyle: styles.headerStyle,
+            headerLeft: () => (
+              <HeaderBackButton
+                withBackground={false}
+                color={colors.white}
+                navigation={navigation}
+              />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="HistoryOrder"
+          component={HistoryOrder}
+          options={({ navigation }) => ({
+            headerTitle: "Lịch sử đơn hàng",
             headerTitleStyle: styles.headerTitleStyle,
             headerStyle: styles.headerStyle,
             headerLeft: () => (

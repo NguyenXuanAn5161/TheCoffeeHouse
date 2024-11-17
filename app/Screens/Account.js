@@ -14,13 +14,24 @@ import AccountItem from "@/components/AccountItem";
 import { useFocusEffect } from "@react-navigation/native";
 
 const data = [
-  { id: 1, name: "Đã xác nhận", img: require("@/assets/images/hoa_don.png") },
+  {
+    id: 1,
+    name: "Đã xác nhận",
+    img: require("@/assets/images/hoa_don.png"),
+    navigate: "HistoryOrder",
+  },
   {
     id: 2,
     name: "Đang xử lý",
     img: require("@/assets/images/ly_nuoc_dong_goi.png"),
+    navigate: "HistoryOrder",
   },
-  { id: 3, name: "Đang giao", img: require("@/assets/images/shipper.png") },
+  {
+    id: 3,
+    name: "Đang giao",
+    img: require("@/assets/images/shipper.png"),
+    navigate: "HistoryOrder",
+  },
 ];
 
 export default function Account({ navigation }) {
