@@ -100,7 +100,7 @@ const AppNavigator = () => {
           name="UpdateUser"
           component={UpdateUser}
           options={({ navigation }) => ({
-            headerTitle: "Cập nhật thông tin",
+            headerTitle: "Thông tin",
             headerTitleStyle: styles.headerTitleStyle,
             headerStyle: styles.headerStyle,
             headerLeft: () => (

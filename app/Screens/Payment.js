@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ScrollView,
   View,
@@ -6,45 +6,62 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
+  Alert,
 } from "react-native";
-import { Button, Provider } from "react-native-paper";
+import { Provider } from "react-native-paper";
 import { globalStyles, colors, fontSizes } from "@/styles/globalStyles";
 import CartItemPayment from "@components/CartItemPayment";
 import FeeCard from "@components/FeeCard";
 import OrderDetail from "@components/OrderDetail";
 import PaymentMethodDialog from "@components/PaymentMethodDialog";
 import { MaterialIcons } from "@expo/vector-icons";
-
-const cartItems = [
-  {
-    id: "1",
-    name: "Cà phê Mocha",
-    size: "S",
-    price: 50000,
-    quantity: 1,
-    image: require("@/assets/images/mocha.png"),
-  },
-  {
-    id: "2",
-    name: "Cà phê Latte",
-    size: "L",
-    price: 45000,
-    quantity: 2,
-    image: require("@/assets/images/latte.png"),
-  },
-];
+import CustomButton from "@/components/CustomButton";
+import { order } from "@/service/order";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const paymentMethods = ["Tiền mặt", "Chuyển khoản", "Ví điện tử"];
-const SHIPPING_FEE = 15000;
+const SHIPPING_FEE = 0;
 
-const Payment = () => {
+const Payment = ({ navigation, route }) => {
   const [note, setNote] = useState("");
+  const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(paymentMethods[0]);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const data = JSON.parse(userData);
+      setUser(data);
+    }
+  };
+
+  const { selectedItems } = route.params;
+
+  const orderData = (data) => {
+    const objOutput = data.map((item) => {
+      return {
+        cartItemId: item.id,
+        productId: item.productId,
+        quantity: item.quantity,
+        size: item.size,
+        paymentMethod: "CASH_ON_DELIVERY",
+      };
+    });
+
+    return objOutput;
+  };
 
   const totalPrice = useMemo(
-    () => cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
-    [cartItems]
+    () =>
+      selectedItems.reduce((sum, item) => sum + item.price * item.quantity, 0),
+    [selectedItems]
   );
   const totalWithShipping = totalPrice + SHIPPING_FEE;
 
@@ -56,8 +73,40 @@ const Payment = () => {
     hideDialog();
   };
 
-  const handleOrder = () => {
-    alert("Đặt hàng thành công!");
+  const handleOrder = async () => {
+    // check method payment
+    if (selectedMethod !== "Tiền mặt") {
+      Toast.show({
+        type: "info",
+        text1: "Thông báo",
+        text2: "Chưa hỗ trợ phương thức thanh toán này!",
+      });
+      return;
+    }
+
+    const data = orderData(selectedItems);
+    setLoading(true);
+    try {
+      const res = await order(user.id, data);
+      if (res.success) {
+        Toast.show({
+          type: "success",
+          text1: "Thành công",
+          text2: res.message,
+        });
+        navigation.navigate("Home");
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Thất bại",
+          text2: res.message,
+        });
+      }
+    } catch (error) {
+      console.log("Error file payment: ", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,7 +117,7 @@ const Payment = () => {
           style={{ paddingHorizontal: 16 }}
         >
           <View style={{ rowGap: 10, marginTop: 10 }}>
-            {cartItems.map((item) => (
+            {selectedItems.map((item) => (
               <CartItemPayment key={item.id} item={item} />
             ))}
             <FeeCard fee={SHIPPING_FEE} label="Phí giao hàng" />
@@ -101,12 +150,11 @@ const Payment = () => {
                 />
               </TouchableOpacity>
             </View>
-            <TouchableOpacity
+            <CustomButton
+              loading={loading}
+              title="Đặt hàng"
               onPress={() => handleOrder()}
-              style={styles.button}
-            >
-              <Text style={styles.btnText}>Đặt hàng</Text>
-            </TouchableOpacity>
+            />
           </View>
         </ScrollView>
 

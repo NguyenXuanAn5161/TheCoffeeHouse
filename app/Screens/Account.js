@@ -1,5 +1,4 @@
 import {
-  Alert,
   Image,
   Pressable,
   ScrollView,
@@ -7,18 +6,12 @@ import {
   Text,
   View,
 } from "react-native";
-import {
-  Foundation,
-  Ionicons,
-  FontAwesome6,
-  MaterialCommunityIcons,
-  MaterialIcons,
-  FontAwesome5,
-} from "@expo/vector-icons";
+import { Foundation } from "@expo/vector-icons";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
-import CustomButton from "@/components/CustomButton";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import AccountItem from "@/components/AccountItem";
+import { useFocusEffect } from "@react-navigation/native";
 
 const data = [
   { id: 1, name: "Đã xác nhận", img: require("@/assets/images/hoa_don.png") },
@@ -30,72 +23,21 @@ const data = [
   { id: 3, name: "Đang giao", img: require("@/assets/images/shipper.png") },
 ];
 
-const items = [
-  {
-    id: 1,
-    name: "Địa chỉ đã lưu",
-    icon: <Ionicons name="location" size={24} color={colors.primary} />,
-  },
-  {
-    id: 2,
-    name: "Yêu thích",
-    icon: <FontAwesome6 name="heart" size={24} color={colors.primary} />,
-  },
-  {
-    id: 3,
-    name: "Hóa đơn",
-    icon: <Ionicons name="receipt" size={24} color={colors.primary} />,
-  },
-  {
-    id: 4,
-    name: "Đánh giá ứng dụng",
-    icon: <FontAwesome6 name="star" size={24} color={colors.primary} />,
-  },
-  {
-    id: 5,
-    name: "Hỗ trợ",
-    icon: (
-      <MaterialIcons name="support-agent" size={24} color={colors.primary} />
-    ),
-  },
-  {
-    id: 6,
-    name: "Điều khoản",
-    icon: (
-      <MaterialCommunityIcons
-        name="file-document-edit-outline"
-        size={24}
-        color={colors.primary}
-      />
-    ),
-  },
-  {
-    id: 7,
-    name: "Cập nhật thông tin",
-    icon: <FontAwesome5 name="user-cog" size={24} color={colors.primary} />,
-    navigate: "UpdateUser",
-  },
-];
-
 export default function Account({ navigation }) {
   const [user, setUser] = useState();
 
-  useEffect(() => {
-    getUserData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      getUserData();
+    }, [])
+  );
 
   const getUserData = async () => {
     const userData = await AsyncStorage.getItem("user");
     if (userData) {
       const data = JSON.parse(userData);
       setUser(data);
-      console.log("Thông tin người dùng: ", data);
     }
-  };
-
-  const handleLogout = async () => {
-    await AsyncStorage.removeItem("user");
-    navigation.navigate("Login");
   };
 
   const handleUpdateUser = (user) => {
@@ -146,25 +88,7 @@ export default function Account({ navigation }) {
         </View>
 
         <View style={{ flex: 1, rowGap: 5 }}>
-          {items.map((item) => (
-            <View key={item.id}>
-              <View style={styles.itemContainer} />
-              <Pressable
-                onPress={() =>
-                  item?.navigate && navigation.navigate(item.navigate)
-                }
-              >
-                <View style={styles.item}>
-                  {item.icon}
-                  <Text style={styles.txtItems}>{item.name}</Text>
-                </View>
-              </Pressable>
-            </View>
-          ))}
-        </View>
-
-        <View style={{ width: "90%", alignSelf: "center" }}>
-          <CustomButton title={"Đăng xuất"} onPress={() => handleLogout()} />
+          <AccountItem userData={user} navigation={navigation} />
         </View>
       </ScrollView>
     </View>
@@ -221,20 +145,6 @@ const styles = StyleSheet.create({
     color: colors.primary,
     textAlign: "center",
     fontSize: fontSizes.sz14,
-    fontWeight: "700",
-  },
-  itemContainer: { width: "100%", borderWidth: 0.2, borderColor: "grey" },
-  item: {
-    flexDirection: "row",
-    alignItems: "center",
-    columnGap: 10,
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-  },
-  txtItems: {
-    color: colors.primary,
-    textAlign: "center",
-    fontSize: fontSizes.sz16,
     fontWeight: "700",
   },
   txtUpdate: { color: colors.danger, fontSize: fontSizes.sz16 },

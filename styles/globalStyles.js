@@ -12,6 +12,7 @@ const colors = {
   pinkLight: "#F8EAEA",
   danger: "red",
   greyBold: "#9D9696",
+  lightGrey: "#d3d3d3",
 };
 
 const fontSizes = {
