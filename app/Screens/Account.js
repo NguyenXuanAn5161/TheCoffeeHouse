@@ -37,7 +37,6 @@ export default function Account({ navigation }) {
     if (userData) {
       const data = JSON.parse(userData);
       setUser(data);
-      console.log("Thông tin người dùng: ", data);
     }
   };
 

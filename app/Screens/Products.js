@@ -106,7 +106,6 @@ const Products = ({ navigation }) => {
     if (userData) {
       const data = JSON.parse(userData);
       setUser(data);
-      console.log("Thông tin người dùng: ", data);
     }
   };
 
@@ -122,7 +121,7 @@ const Products = ({ navigation }) => {
     setLoading(true);
     try {
       const res = await getAllProduct();
-      console.log("data: ", res.data);
+
       if (res.success) {
         setProduct(res.data);
       }
@@ -137,7 +136,7 @@ const Products = ({ navigation }) => {
     setLoading(true);
     try {
       const res = await addShoppingCart(user.id, productId, "S", "1");
-      console.log("data: ", res.data);
+
       if (res.success) {
         Toast.show({
           type: "success",

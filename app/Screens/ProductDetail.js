@@ -42,7 +42,6 @@ const ProductDetail = ({ route }) => {
     if (userData) {
       const data = JSON.parse(userData);
       setUser(data);
-      console.log("Thông tin người dùng: ", data);
     }
   };
 
@@ -92,7 +91,7 @@ const ProductDetail = ({ route }) => {
         selectedSize.size,
         quantity
       );
-      console.log("data: ", res.data);
+
       if (res.success) {
         Toast.show({
           type: "success",

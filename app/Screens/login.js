@@ -31,7 +31,7 @@ const LoginScreen = ({ navigation }) => {
     setLoadding(true);
     try {
       const res = await login(values.username, values.password);
-      console.log("res login: ", res);
+
       if (res.success) {
         // lưu vào storage
         await AsyncStorage.setItem("user", JSON.stringify(res.data));

@@ -38,7 +38,6 @@ const ShoppingCart = ({ navigation }) => {
       const data = JSON.parse(userData);
       setUser(data);
       await getShoppingCart(data.id);
-      console.log("Thông tin người dùng: ", data);
     }
   };
 
@@ -134,25 +133,6 @@ const ShoppingCart = ({ navigation }) => {
     setTotalPrice(total);
   };
 
-  // const handleQuantityChange = (productId, newQuantity) => {
-  //   // Cập nhật số lượng sản phẩm trong giỏ hàng
-  //   setCartItems((prevCartItems) =>
-  //     prevCartItems.map((item) =>
-  //       item.id === productId ? { ...item, quantity: newQuantity } : item
-  //     )
-  //   );
-
-  //   // Cập nhật số lượng trong `selectedItems` nếu sản phẩm đã được chọn
-  //   setSelectedItems((prevSelectedItems) =>
-  //     prevSelectedItems.map((item) =>
-  //       item.id === productId ? { ...item, quantity: newQuantity } : item
-  //     )
-  //   );
-
-  //   // Tính lại tổng giá tiền
-  //   calculateTotalPrice();
-  // };
-
   const handleQuantityChange = async (productId, newQuantity) => {
     setLoading(true);
     try {
@@ -185,6 +165,10 @@ const ShoppingCart = ({ navigation }) => {
       setLoading(false);
       calculateTotalPrice();
     }
+  };
+
+  const handleOrderPayment = () => {
+    navigation.navigate("Payment", { selectedItems });
   };
 
   return (
@@ -225,7 +209,7 @@ const ShoppingCart = ({ navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Payment")}
+          onPress={() => handleOrderPayment()}
           style={styles.checkoutButton}
         >
           <Text style={styles.checkoutButtonText}>Đặt hàng</Text>
