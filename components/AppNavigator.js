@@ -10,7 +10,7 @@ import { colors, globalStyles } from "@/styles/globalStyles";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Payment from "@/app/screens/Payment";
 import UpdateUser from "@/app/screens/UpdateUser";
-import HistoryOrder from "@/app/screens/HistoryOrder";
+import HistoryOrder from "@/app/screens/HistoryOrder/HistoryOrder";
 
 const Stack = createStackNavigator();
 
