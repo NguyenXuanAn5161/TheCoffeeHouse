@@ -13,3 +13,14 @@ export const order = async (userId, orderData) => {
     return error.response.data;
   }
 };
+
+export const orderStatusData = async (userId) => {
+  try {
+    const response = await axios.get(`/api/orders/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.log("error api order status data: ", error.response.data);
+
+    return error.response.data;
+  }
+};
