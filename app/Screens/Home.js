@@ -41,7 +41,54 @@ export default function Home({ navigation }) {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
+  // ----------------------------------------------------------
+  const [isConnected, setIsConnected] = useState(false);
 
+  useEffect(() => {
+    if (!user?.id) return;
+    const URL = `ws://192.168.1.187:8082/order-status?userId=${user.id}`;
+    const socket = new WebSocket(URL);
+
+    // Khi kết nối thành công
+    socket.onopen = () => {
+      setIsConnected(true);
+      console.log("WebSocket đã kết nối thành công");
+      alert("WebSocket đã kết nối thành công");
+    };
+
+    // Khi nhận được tin nhắn từ server
+    socket.onmessage = (event) => {
+      console.log("Nhận được tin nhắn:", event.data);
+      alert(`Đơn hàng của bạn đã được cập nhật: ${event.data}`);
+    };
+
+    // Khi kết nối bị đóng
+    socket.onclose = () => {
+      setIsConnected(false);
+      console.log("WebSocket đã bị đóng");
+      alert("WebSocket đã bị đóng");
+    };
+
+    // Khi có lỗi xảy ra
+    socket.onerror = (error) => {
+      console.log("WebSocket gặp lỗi:", error);
+      alert("WebSocket gặp lỗi");
+    };
+
+    // Đóng kết nối khi component bị unmount
+    return () => {
+      socket.close();
+    };
+  }, [user]);
+
+  useEffect(() => {
+    if (isConnected) {
+      console.log("Kết nối WebSocket thành công!");
+    } else {
+      console.log("Đang chờ kết nối...");
+    }
+  }, [isConnected]);
+  // ----------------------------------------------------------
   useFocusEffect(
     React.useCallback(() => {
       getUserData();
