@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import React from "react";
+import HistoryOrderCard from "@/components/HistoryOrderCard";
 
-const Processing = () => {
+const Processing = ({ processingData }) => {
   return (
-    <View>
-      <Text>Processing</Text>
-    </View>
+    <FlatList
+      data={processingData}
+      keyExtractor={(item) => item.orderId.toString()}
+      renderItem={({ item }) => <HistoryOrderCard order={item} />}
+    />
   );
 };
 

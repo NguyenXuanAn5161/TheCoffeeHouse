@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import StepIndicator from "react-native-step-indicator";
-import Pendding from "@screens/HistoryOrder/Pendding";
+import Pendding from "@/app/screens/HistoryOrder/Pending";
 import Processing from "@screens/HistoryOrder/Processing";
 import Shipped from "@screens/HistoryOrder/Shipped";
 import Delivered from "@screens/HistoryOrder/Delivered";
 import Canceled from "@screens/HistoryOrder/Canceled";
 import { View } from "react-native";
+import { orderStatusData } from "@/service/order";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const labels = ["Pendding", "Processing", "Shipped", "Delivered", "Canceled"];
 
@@ -43,7 +45,7 @@ export default function HistoryOrderTab() {
     <Stack.Navigator>
       <Stack.Screen options={{ headerShown: false }} name="Step Process">
         {() => (
-          <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, marginTop: 10 }}>
             <StepIndicator
               customStyles={customStyles}
               currentPosition={currentPosition}
@@ -67,13 +69,58 @@ export default function HistoryOrderTab() {
 
 // Component để điều hướng giữa các bước
 const CurrentStepScreen = ({ currentPosition }) => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState([]);
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    const userData = await AsyncStorage.getItem("user");
+    if (userData) {
+      const data = JSON.parse(userData);
+      setUser(data);
+    }
+  };
+
+  useEffect(() => {
+    if (user?.id) {
+      getOrderData();
+    }
+  }, [user]);
+
+  const getOrderData = async () => {
+    setLoading(true);
+    try {
+      const res = await orderStatusData(user.id);
+      if (res.success) {
+        console.log("check res.data: ", res.data);
+        setData(res.data);
+      }
+    } catch (error) {
+      console.log("error file historyOrderTab: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const pendingData = data.filter((order) => order.status === "PENDING");
+  const processingData = data.filter((order) => order.status === "PROCESSING");
+  const shippedData = data.filter((order) => order.status === "SHIPPED");
+  const deliveredData = data.filter((order) => order.status === "DELIVERED");
+  const canceledData = data.filter((order) => order.status === "CANCELED");
+
   const screens = [
-    <Pendding />,
-    <Processing />,
-    <Shipped />,
-    <Delivered />,
-    <Canceled />,
+    <Pendding pendingData={pendingData} />,
+    <Processing processingData={processingData} />,
+    <Shipped shippedData={shippedData} />,
+    <Delivered deliveredData={deliveredData} />,
+    <Canceled canceledData={canceledData} />,
   ];
 
-  return screens[currentPosition];
+  return (
+    <View style={{ padding: 10, flex: 1 }}>{screens[currentPosition]}</View>
+  );
 };

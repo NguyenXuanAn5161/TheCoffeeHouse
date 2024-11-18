@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from "react-native";
+import { FlatList, StyleSheet, Text, View } from "react-native";
 import React from "react";
+import HistoryOrderCard from "@/components/HistoryOrderCard";
 
-const Canceled = () => {
+const Canceled = ({ canceledData }) => {
   return (
-    <View>
-      <Text>Canceled</Text>
-    </View>
+    <FlatList
+      data={canceledData}
+      keyExtractor={(item) => item.orderId.toString()}
+      renderItem={({ item }) => <HistoryOrderCard order={item} />}
+    />
   );
 };
 
