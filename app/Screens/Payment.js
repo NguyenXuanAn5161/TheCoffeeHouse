@@ -48,9 +48,6 @@ const Payment = ({ navigation, route }) => {
     const objOutput = data.map((item) => {
       return {
         cartItemId: item.id,
-        productId: item.productId,
-        quantity: item.quantity,
-        size: item.size,
         paymentMethod: "CASH_ON_DELIVERY",
       };
     });
