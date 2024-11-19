@@ -1,8 +1,9 @@
 import { colors, globalStyles } from "@/styles/globalStyles";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, View, Text, Image, Pressable } from "react-native";
 import image from "@/assets/images/donhang.png";
 import { formatTime } from "@/utils/formatTime";
+import Toast from "react-native-toast-message";
 
 const CardNotification = ({ item, navigation }) => {
   const orderStatusMessages = {
@@ -20,6 +21,17 @@ const CardNotification = ({ item, navigation }) => {
   const handleHistoryOrder = (status) => {
     navigation.navigate("HistoryOrder", { status });
   };
+
+  useEffect(() => {
+    const stringInfo = getOrderStatusMessage(item.status);
+    Toast.show({
+      type: "success",
+      text1: "Có thông báo mới!",
+      text2: `Đơn hàng #${item.orderId} ${stringInfo}`,
+      visibilityTime: 4000,
+      autoHide: true,
+    });
+  }, [item]);
 
   return (
     <Pressable

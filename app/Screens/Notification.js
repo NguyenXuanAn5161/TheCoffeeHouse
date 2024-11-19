@@ -63,7 +63,7 @@ export default function Notification({ navigation }) {
     <View style={styles.container}>
       <View style={{ flex: 1, backgroundColor: colors.backgroundGrey }}>
         <FlatList
-          data={notifications}
+          data={notifications.reverse()}
           renderItem={({ item }) => (
             <CardNotification
               navigation={navigation}
@@ -71,7 +71,7 @@ export default function Notification({ navigation }) {
               item={item}
             />
           )}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.orderId.toString()}
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
