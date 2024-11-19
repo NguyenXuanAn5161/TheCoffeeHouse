@@ -3,7 +3,7 @@
       "baseUrl": "./",
       "paths": {
         "@/*": ["./*"],  // Alias "@" trỏ đến thư mục gốc
-        "@screens/*": ["app/screens/*"],
+        "@screens/*": ["app/Screens/*"],
         "@components/*": ["./components/*"],
       }
     }
