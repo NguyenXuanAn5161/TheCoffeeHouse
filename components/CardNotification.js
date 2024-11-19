@@ -1,17 +1,57 @@
-import { colors } from "@/styles/globalStyles";
-import React from "react";
-import { StyleSheet, View, Text, Image } from "react-native";
+import { colors, globalStyles } from "@/styles/globalStyles";
+import React, { useEffect } from "react";
+import { StyleSheet, View, Text, Image, Pressable } from "react-native";
+import image from "@/assets/images/donhang.png";
+import { formatTime } from "@/utils/formatTime";
+import Toast from "react-native-toast-message";
 
-const CardNotification = ({ title, description, date, image }) => {
+const CardNotification = ({ item, navigation }) => {
+  const orderStatusMessages = {
+    PENDING: "đang chờ xử lý, hãy kiên nhẫn một chút nhé!",
+    PROCESSING: "đang được xử lý, chúng tôi đang chuẩn bị để giao cho bạn.",
+    SHIPPED: "đã được gửi đi, chỉ một chút nữa là đến tay bạn!",
+    DELIVERED: "đã được giao thành công.",
+    CANCELED: "của bạn đã bị hủy.",
+  };
+
+  const getOrderStatusMessage = (status) => {
+    return orderStatusMessages[status] || "Trạng thái không xác định.";
+  };
+
+  const handleHistoryOrder = (status) => {
+    navigation.navigate("HistoryOrder", { status });
+  };
+
+  useEffect(() => {
+    const stringInfo = getOrderStatusMessage(item.status);
+    Toast.show({
+      type: "success",
+      text1: "Có thông báo mới!",
+      text2: `Đơn hàng #${item.orderId} ${stringInfo}`,
+      visibilityTime: 4000,
+      autoHide: true,
+    });
+  }, [item]);
+
   return (
-    <View style={styles.card}>
+    <Pressable
+      onPress={() => handleHistoryOrder(item.status)}
+      style={[styles.card, globalStyles.shadow]}
+    >
       <Image source={image} style={styles.image} />
       <View style={styles.textContainer}>
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.description}>{description}</Text>
-        <Text style={styles.date}>{date}</Text>
+        <Text style={styles.orderId}>Đơn hàng #{item.orderId}</Text>
+        <Text style={styles.status}>
+          Đơn hàng #{item.orderId} {getOrderStatusMessage(item.status)}
+        </Text>
+        <Text style={styles.date}>
+          Đặt hàng lúc: {formatTime(item.createdAt)}
+        </Text>
+        <Text style={styles.date}>
+          Cập nhật lúc: {formatTime(item.updatedAt)}
+        </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 
@@ -20,9 +60,11 @@ export default CardNotification;
 const styles = StyleSheet.create({
   card: {
     flexDirection: "row",
-    backgroundColor: colors.backgroundGrey,
+    backgroundColor: colors.pinkLight,
     padding: 12,
     columnGap: 12,
+    margin: 5,
+    borderRadius: 5,
   },
   image: {
     width: 50,
@@ -35,7 +77,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
   },
-  title: {
+  orderId: {
     fontSize: 16,
     fontWeight: "bold",
   },
@@ -43,8 +85,9 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: colors.text,
     marginVertical: 4,
+    fontWeight: "500",
   },
-  description: {
+  status: {
     fontSize: 14,
     color: colors.text,
   },

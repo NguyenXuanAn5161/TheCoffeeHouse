@@ -3,9 +3,10 @@ import React from "react";
 import HistoryOrderCard from "@/components/HistoryOrderCard";
 
 const Canceled = ({ canceledData }) => {
+  const reversedData = [...canceledData].reverse();
   return (
     <FlatList
-      data={canceledData}
+      data={reversedData}
       keyExtractor={(item) => item.orderId.toString()}
       renderItem={({ item }) => <HistoryOrderCard order={item} />}
     />
