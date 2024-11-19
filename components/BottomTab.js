@@ -1,10 +1,10 @@
-import Products from "@/app/Screens/Products";
+import Products from "@/app/screens/Products";
 import { colors, fontSizes } from "@/styles/globalStyles";
 import { Fontisto, Ionicons, AntDesign } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Account from "@/app/Screens/Account";
-import Home from "@/app/Screens/Home";
-import Notification from "@/app/Screens/Notification";
+import Account from "@/app/screens/Account";
+import Home from "@/app/screens/Home";
+import Notification from "@/app/screens/Notification";
 import { StyleSheet, View, Text } from "react-native";
 import CustomHeader from "./CustomHeader";
 
