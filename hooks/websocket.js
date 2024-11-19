@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 // Hàm khởi tạo và quản lý WebSocket
-export const useWebSocket = (userId) => {
+export const useWebSocket = (userId, onMessageReceived) => {
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
 
@@ -20,7 +20,10 @@ export const useWebSocket = (userId) => {
     // Khi nhận được tin nhắn từ server
     ws.onmessage = (event) => {
       console.log("Nhận thông báo:", event.data);
-      alert(`Thông báo: ${event.data}`);
+      if (onMessageReceived) {
+        // Gọi callback khi nhận được thông báo mới
+        onMessageReceived(event.data); // Chuyển đổi chuỗi JSON thành object
+      }
     };
 
     // Khi kết nối bị đóng

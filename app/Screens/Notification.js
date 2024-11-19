@@ -1,34 +1,64 @@
+import useUserData from "@/hooks/useUserData";
+import { useWebSocket } from "@/hooks/websocket";
 import { colors } from "@/styles/globalStyles";
 import CardNotification from "@components/CardNotification";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View, FlatList } from "react-native";
 
 // Dữ liệu mẫu với ngày và hình ảnh
-const notifications = [
+const notification = [
   {
-    id: "1",
-    title: "Thông báo 1",
-    description: "Đây là thông báo đầu tiên.",
-    date: "2024-11-09",
-    image: require("@/assets/images/mocha.png"),
+    createdAt: 1731950637195,
+    items: [[Object]],
+    orderId: 7,
+    paymentMethod: "CASH_ON_DELIVERY",
+    status: "SHIPPED",
+    totalPrice: 60000,
+    updatedAt: 1731986943198,
   },
   {
-    id: "2",
-    title: "Thông báo 2",
-    description: "Đây là thông báo thứ hai.",
-    date: "2024-11-08",
-    image: require("@/assets/images/mocha.png"),
-  },
-  {
-    id: "3",
-    title: "Thông báo 3",
-    description: "Đây là thông báo thứ ba.",
-    date: "2024-11-07",
-    image: require("@/assets/images/mocha.png"),
+    createdAt: 1731950637195,
+    items: [[Object]],
+    orderId: 7,
+    paymentMethod: "CASH_ON_DELIVERY",
+    status: "DELIVERED",
+    totalPrice: 60000,
+    updatedAt: 1731986960067,
   },
 ];
 
 export default function Notification({ navigation }) {
+  const [notifications, setNotifications] = useState([]);
+
+  // Hàm thêm thông báo mới vào danh sách
+  const addNotification = (notification) => {
+    console.log("notification nhận được: ", notification);
+
+    // Kiểm tra nếu thông báo hợp lệ trước khi thêm vào state
+    if (notification && notification !== "Connected") {
+      try {
+        // Kiểm tra xem dữ liệu có phải là chuỗi JSON hợp lệ không
+        const data =
+          typeof notification === "string"
+            ? JSON.parse(notification)
+            : notification;
+        console.log("notification sau khi parse: ", data);
+
+        // Chỉ thêm thông báo hợp lệ vào danh sách
+        setNotifications((prevData) => [...prevData, data]);
+      } catch (error) {
+        console.error("Lỗi khi parse thông báo:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    console.log("notification trong useEffect: ", notifications);
+  }, [notifications]);
+
+  const user = useUserData();
+  useWebSocket(user?.id, addNotification);
+
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, backgroundColor: colors.backgroundGrey }}>
@@ -36,10 +66,9 @@ export default function Notification({ navigation }) {
           data={notifications}
           renderItem={({ item }) => (
             <CardNotification
-              title={item.title}
-              description={item.description}
-              date={item.date}
-              image={item.image}
+              navigation={navigation}
+              key={item.orderId}
+              item={item}
             />
           )}
           keyExtractor={(item) => item.id}
