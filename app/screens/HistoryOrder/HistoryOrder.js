@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import StepIndicator from "react-native-step-indicator";
-import Pendding from "@/app/temp/HistoryOrder/Pending";
-import Processing from "@/app/temp/HistoryOrder/Processing";
-import Shipped from "@/app/temp/HistoryOrder/Shipped";
-import Delivered from "@/app/temp/HistoryOrder/Delivered";
-import Canceled from "@/app/temp/HistoryOrder/Canceled";
+import Pendding from "@/app/screens/HistoryOrder/Pending";
+import Processing from "@/app/screens/HistoryOrder/Processing";
+import Shipped from "@/app/screens/HistoryOrder/Shipped";
+import Delivered from "@/app/screens/HistoryOrder/Delivered";
+import Canceled from "@/app/screens/HistoryOrder/Canceled";
 import { View } from "react-native";
 import { orderStatusData } from "@/service/order";
 import AsyncStorage from "@react-native-async-storage/async-storage";

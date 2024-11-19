@@ -2,15 +2,15 @@ import React from "react";
 import { Pressable, SafeAreaView, StyleSheet, View } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import BottomTab from "./BottomTab";
-import Login from "@/app/temp/login";
-import Register from "@/app/temp/register";
-import ShoppingCart from "@/app/temp/ShoppingCart";
-import ProductDetail from "@/app/temp/ProductDetail";
+import Login from "@/app/screens/login";
+import Register from "@/app/screens/register";
+import ShoppingCart from "@/app/screens/ShoppingCart";
+import ProductDetail from "@/app/screens/ProductDetail";
 import { colors, globalStyles } from "@/styles/globalStyles";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
-import Payment from "@/app/temp/Payment";
-import UpdateUser from "@/app/temp/UpdateUser";
-import HistoryOrder from "@/app/temp/HistoryOrder/HistoryOrder";
+import Payment from "@/app/screens/Payment";
+import UpdateUser from "@/app/screens/UpdateUser";
+import HistoryOrder from "@/app/screens/HistoryOrder/HistoryOrder";
 
 const Stack = createStackNavigator();
 
