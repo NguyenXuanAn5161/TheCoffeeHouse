@@ -1,32 +1,3 @@
-<<<<<<< HEAD
-import { colors } from "@/styles/globalStyles";
-import CardNotification from "@components/CardNotification";
-import React from "react";
-import { StyleSheet, View, FlatList } from "react-native";
-
-// Dữ liệu mẫu với ngày và hình ảnh
-const notifications = [
-  {
-    id: "1",
-    title: "Thông báo 1",
-    description: "Đây là thông báo đầu tiên.",
-    date: "2024-11-09",
-    image: require("@/assets/images/mocha.png"),
-  },
-  {
-    id: "2",
-    title: "Thông báo 2",
-    description: "Đây là thông báo thứ hai.",
-    date: "2024-11-08",
-    image: require("@/assets/images/mocha.png"),
-  },
-  {
-    id: "3",
-    title: "Thông báo 3",
-    description: "Đây là thông báo thứ ba.",
-    date: "2024-11-07",
-    image: require("@/assets/images/mocha.png"),
-=======
 import useUserData from "@/hooks/useUserData";
 import { useWebSocket } from "@/hooks/websocket";
 import { colors } from "@/styles/globalStyles";
@@ -53,13 +24,10 @@ const notification = [
     status: "DELIVERED",
     totalPrice: 60000,
     updatedAt: 1731986960067,
->>>>>>> 882e75b3f58a7a0dc3de4348e8332e3f951ddcb0
   },
 ];
 
 export default function Notification({ navigation }) {
-<<<<<<< HEAD
-=======
   const [notifications, setNotifications] = useState([]);
 
   // Hàm thêm thông báo mới vào danh sách
@@ -91,23 +59,10 @@ export default function Notification({ navigation }) {
   const user = useUserData();
   useWebSocket(user?.id, addNotification);
 
->>>>>>> 882e75b3f58a7a0dc3de4348e8332e3f951ddcb0
   return (
     <View style={styles.container}>
       <View style={{ flex: 1, backgroundColor: colors.backgroundGrey }}>
         <FlatList
-<<<<<<< HEAD
-          data={notifications}
-          renderItem={({ item }) => (
-            <CardNotification
-              title={item.title}
-              description={item.description}
-              date={item.date}
-              image={item.image}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-=======
           data={notifications.reverse()}
           renderItem={({ item }) => (
             <CardNotification
@@ -117,7 +72,6 @@ export default function Notification({ navigation }) {
             />
           )}
           keyExtractor={(item) => item.orderId.toString()}
->>>>>>> 882e75b3f58a7a0dc3de4348e8332e3f951ddcb0
           showsVerticalScrollIndicator={false}
           ItemSeparatorComponent={() => <View style={styles.separator} />}
         />
