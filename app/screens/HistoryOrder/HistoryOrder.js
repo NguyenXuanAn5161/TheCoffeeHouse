@@ -38,8 +38,24 @@ const customStyles = {
 
 const Stack = createStackNavigator();
 
-export default function HistoryOrderTab() {
+export default function HistoryOrderTab({ route }) {
   const [currentPosition, setCurrentPosition] = useState(0);
+  console.log("route: ", route.params.status);
+
+  useEffect(() => {
+    // Kiểm tra trạng thái và thiết lập vị trí tương ứng
+    if (route.params.status === "PENDING") {
+      setCurrentPosition(0);
+    } else if (route.params.status === "PROCESSING") {
+      setCurrentPosition(1);
+    } else if (route.params.status === "SHIPPED") {
+      setCurrentPosition(2);
+    } else if (route.params.status === "DELIVERED") {
+      setCurrentPosition(3);
+    } else if (route.params.status === "CANCELED") {
+      setCurrentPosition(4);
+    }
+  }, [route.params.status]);
 
   return (
     <Stack.Navigator>
@@ -96,7 +112,6 @@ const CurrentStepScreen = ({ currentPosition }) => {
     try {
       const res = await orderStatusData(user.id);
       if (res.success) {
-        console.log("check res.data: ", res.data);
         setData(res.data);
       }
     } catch (error) {

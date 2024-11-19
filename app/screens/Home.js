@@ -5,7 +5,6 @@ import {
   Image,
   Pressable,
   ScrollView,
-  Alert,
 } from "react-native";
 import CustomSearch from "@/components/CustomSearch";
 import React, { useEffect, useState } from "react";
@@ -17,6 +16,7 @@ import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useWebSocket } from "@/hooks/websocket";
 
 const category = [
   {
@@ -41,7 +41,17 @@ export default function Home({ navigation }) {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState();
-
+  // ----------------------------------------------------------
+  // Sử dụng hook useWebSocket
+  const { isConnected } = useWebSocket(user?.id);
+  useEffect(() => {
+    if (isConnected) {
+      console.log("Kết nối WebSocket thành công!");
+    } else {
+      console.log("Đang chờ kết nối...");
+    }
+  }, [isConnected]);
+  // ----------------------------------------------------------
   useFocusEffect(
     React.useCallback(() => {
       getUserData();

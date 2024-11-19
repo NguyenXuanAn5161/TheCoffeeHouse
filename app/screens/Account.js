@@ -19,18 +19,21 @@ const data = [
     name: "Đã xác nhận",
     img: require("@/assets/images/hoa_don.png"),
     navigate: "HistoryOrder",
+    status: "PROCESSING",
   },
   {
     id: 2,
     name: "Đang xử lý",
     img: require("@/assets/images/ly_nuoc_dong_goi.png"),
     navigate: "HistoryOrder",
+    status: "PROCESSING",
   },
   {
     id: 3,
     name: "Đang giao",
     img: require("@/assets/images/shipper.png"),
     navigate: "HistoryOrder",
+    status: "SHIPPED",
   },
 ];
 
@@ -88,7 +91,8 @@ export default function Account({ navigation }) {
             <View key={item.id} style={[styles.category, globalStyles.shadow]}>
               <Pressable
                 onPress={() =>
-                  item?.navigate && navigation.navigate(item.navigate)
+                  item?.navigate &&
+                  navigation.navigate(item.navigate, { status: item.status })
                 }
               >
                 <Image source={item.img} style={styles.img_cate} />

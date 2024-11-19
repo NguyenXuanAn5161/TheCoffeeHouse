@@ -2,6 +2,7 @@ import HistoryOrderCard from "@components/HistoryOrderCard";
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 
+<<<<<<< HEAD
 // Mẫu dữ liệu đơn hàng
 const orders = [
   {
@@ -56,6 +57,13 @@ const PendingOrders = ({ pendingData }) => {
   return (
     <FlatList
       data={pendingData}
+=======
+const PendingOrders = ({ pendingData }) => {
+  const reversedData = [...pendingData].reverse();
+  return (
+    <FlatList
+      data={reversedData}
+>>>>>>> 882e75b3f58a7a0dc3de4348e8332e3f951ddcb0
       keyExtractor={(item) => item.orderId.toString()}
       renderItem={({ item }) => <HistoryOrderCard order={item} />}
     />

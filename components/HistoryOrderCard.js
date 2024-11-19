@@ -2,6 +2,7 @@ import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { colors, fontSizes } from "@/styles/globalStyles";
 import CartItemPayment from "./CartItemPayment";
+import { formatTime } from "@/utils/formatTime";
 
 const HistoryOrderCard = ({ order }) => {
   const getStatusText = (status) => {
@@ -24,7 +25,7 @@ const HistoryOrderCard = ({ order }) => {
   return (
     <View style={styles.card}>
       <Text style={styles.title}>Mã đơn hàng: #{order.orderId}</Text>
-      <Text>Ngày tạo: {new Date(order.createdAt).toLocaleString()}</Text>
+      <Text>Ngày tạo: {formatTime(order.createdAt)}</Text>
       <Text>
         Trạng thái:{" "}
         <Text style={styles.text}>{getStatusText(order?.status)}</Text>
