@@ -1,0 +1,338 @@
+[
+  {
+    "name": "Americano",
+    "description": "Cà phê đen Americano, vị đậm đà và thơm ngon.",
+    "quantity": 500,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/xbfAYfp.png",
+    "sizePrice": {
+      "S": 30000,
+      "M": 35000,
+      "L": 40000
+    }
+  },
+  {
+    "name": "Mocha",
+    "description": "Cà phê Mocha với hương vị chocolate ngọt ngào.",
+    "quantity": 300,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/OkCcxJr.png",
+    "sizePrice": {
+      "S": 40000,
+      "M": 45000,
+      "L": 50000
+    }
+  },
+  {
+    "name": "Cappuccino",
+    "description": "Cà phê Cappuccino kết hợp giữa bọt sữa và espresso.",
+    "quantity": 400,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/Zsz79n5.png",
+    "sizePrice": {
+      "S": 35000,
+      "M": 40000,
+      "L": 45000
+    }
+  },
+  {
+    "name": "Espresso",
+    "description": "Cà phê Espresso đậm vị nguyên chất cho tín đồ cà phê.",
+    "quantity": 200,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/byFksAU.png",
+    "sizePrice": {
+      "S": 25000,
+      "M": 30000,
+      "L": 35000
+    }
+  },
+  {
+    "name": "Latte",
+    "description": "Cà phê Latte kết hợp giữa espresso và sữa nóng.",
+    "quantity": 350,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/n0wBmjf.png",
+    "sizePrice": {
+      "S": 35000,
+      "M": 40000,
+      "L": 45000
+    }
+  },
+  {
+    "name": "Vanilla Latte",
+    "description": "Cà phê Latte với hương vanilla ngọt ngào.",
+    "quantity": 250,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/irHY3DY.png",
+    "sizePrice": {
+      "S": 38000,
+      "M": 43000,
+      "L": 48000
+    }
+  },
+  {
+    "name": "Chocolate Latte",
+    "description": "Cà phê Latte kết hợp với hương chocolate đậm đà.",
+    "quantity": 300,
+    "category": "Chocolate",
+    "imageUrl": "https://i.imgur.com/wgfaOte.png",
+    "sizePrice": {
+      "S": 40000,
+      "M": 45000,
+      "L": 50000
+    }
+  },
+  {
+    "name": "Iced Latte",
+    "description": "Cà phê Latte lạnh, pha với sữa tươi và đá, thích hợp cho những ngày hè nóng bức.",
+    "quantity": 500,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/irHY3DY.png",
+    "sizePrice": {
+      "S": 35000,
+      "M": 40000,
+      "L": 45000
+    }
+  },
+  {
+    "name": "Iced Mocha",
+    "description": "Cà phê Mocha lạnh với hương vị chocolate đậm đà, ngọt ngào, hòa quyện cùng đá và sữa.",
+    "quantity": 600,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/n1XVbP7.png",
+    "sizePrice": {
+      "S": 40000,
+      "M": 45000,
+      "L": 50000
+    }
+  },
+  {
+    "name": "Iced Lemon",
+    "description": "Nước chanh lạnh, thơm mát và chua ngọt, là thức uống giải nhiệt tuyệt vời.",
+    "quantity": 700,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/nX7rvxS.png",
+    "sizePrice": {
+      "S": 15000,
+      "M": 20000,
+      "L": 25000
+    }
+  },
+  {
+    "name": "Iced Latte",
+    "description": "Cà phê Latte lạnh, pha với sữa và đá, thơm ngon.",
+    "quantity": 500,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/ll6qctd.png",
+    "sizePrice": {
+      "S": 35000,
+      "M": 40000,
+      "L": 45000
+    }
+  },
+  {
+    "name": "Vanilla Tea",
+    "description": "Trà Vanilla ngọt ngào, kết hợp giữa trà và vanilla.",
+    "quantity": 400,
+    "category": "Chocolate",
+    "imageUrl": "https://i.imgur.com/VanillaTea.png",
+    "sizePrice": {
+      "S": 25000,
+      "M": 30000,
+      "L": 35000
+    }
+  },
+  {
+    "name": "Iced Mocha",
+    "description": "Cà phê Mocha lạnh với hương vị chocolate thơm ngon.",
+    "quantity": 600,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/IcedMocha.png",
+    "sizePrice": {
+      "S": 40000,
+      "M": 45000,
+      "L": 50000
+    }
+  },
+  {
+    "name": "Iced Lemon",
+    "description": "Nước chanh lạnh, chua ngọt, giải nhiệt tuyệt vời.",
+    "quantity": 700,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/IcedLemon.png",
+    "sizePrice": {
+      "S": 15000,
+      "M": 20000,
+      "L": 25000
+    }
+  },
+  {
+    "name": "Cà phê muối",
+    "description": "Cà phê muối đậm đà, hương vị đặc trưng khó quên.",
+    "quantity": 100,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/r8y9pVy.png",
+    "sizePrice": {
+      "S": 15000,
+      "M": 20000,
+      "L": 25000
+    }
+  },
+  {
+    "name": "Bạc xỉu kem muối",
+    "description": "Bạc xỉu hòa quyện kem muối mịn màng, ngọt ngào.",
+    "quantity": 500,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/BLaeSl5.png",
+    "sizePrice": {
+      "S": 25000,
+      "M": 30000,
+      "L": 35000
+    }
+  },
+  {
+    "name": "Nâu đá",
+    "description": "Cà phê nâu đá thơm ngon, đậm đà và đầy năng lượng.",
+    "quantity": 800,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/wwr7Rhc.png",
+    "sizePrice": {
+      "S": 20000,
+      "M": 25000,
+      "L": 30000
+    }
+  },
+  {
+    "name": "Sữa tươi cà phê",
+    "description": "Sữa tươi hòa quyện cà phê, thức uống thanh nhẹ.",
+    "quantity": 600,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/8RCOQoW.png",
+    "sizePrice": {
+      "S": 30000,
+      "M": 35000,
+      "L": 40000
+    }
+  },
+  {
+    "name": "Bạc xỉu",
+    "description": "Sữa hòa quyện cà phê, vị ngọt và thơm đậm đà.",
+    "quantity": 500,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/H1nrj8S.png",
+    "sizePrice": {
+      "S": 20000,
+      "M": 25000,
+      "L": 30000
+    }
+  },
+  {
+    "name": "Đen đá",
+    "description": "Cà phê đen đá, đậm vị nguyên bản, thanh mát.",
+    "quantity": 800,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/Sl7n7ae.png",
+    "sizePrice": {
+      "S": 15000,
+      "M": 20000,
+      "L": 25000
+    }
+  },
+  {
+    "name": "Coldbrew",
+    "description": "Cà phê lạnh pha chậm, giữ trọn hương vị tự nhiên.",
+    "quantity": 700,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/r4VGWW4.png",
+    "sizePrice": {
+      "S": 30000,
+      "M": 35000,
+      "L": 40000
+    }
+  },
+  {
+    "name": "Trà tắc xí muội",
+    "description": "Trà tắc xí muội, chua ngọt thanh mát, giải nhiệt.",
+    "quantity": 600,
+    "category": "Coffee",
+    "imageUrl": "https://i.imgur.com/kgYPuZZ.png",
+    "sizePrice": {
+      "S": 25000,
+      "M": 30000,
+      "L": 35000
+    }
+  },
+  {
+    "name": "Bánh comboloni",
+    "description": "Bánh ngọt nhân kem béo ngậy, mềm mịn thơm ngon.",
+    "quantity": 30,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/0sECzf8.png",
+    "sizePrice": {
+      "S": 52000,
+      "M": 60000,
+      "L": 68000
+    }
+  },
+  {
+    "name": "Bánh sừng bò mini chấm sốt",
+    "description": "Bánh sừng bò mini, chấm sốt đậm đà thơm ngon.",
+    "quantity": 25,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/UVeHhvm.png",
+    "sizePrice": {
+      "S": 60000,
+      "M": 67000,
+      "L": 75000
+    }
+  },
+  {
+    "name": "Bánh mì nguyên cám",
+    "description": "Bánh mì nguyên cám, giàu dinh dưỡng, thơm ngon.",
+    "quantity": 20,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/PoGZaRZ.png",
+    "sizePrice": {
+      "S": 68000,
+      "M": 75000,
+      "L": 82000
+    }
+  },
+  {
+    "name": "Bánh mì khoai lang phô mai",
+    "description": "Bánh mì khoai lang hòa quyện phô mai béo ngậy.",
+    "quantity": 15,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/KT6z8BG.png",
+    "sizePrice": {
+      "S": 75000,
+      "M": 82000,
+      "L": 90000
+    }
+  },
+  {
+    "name": "Bánh mì nho dừa",
+    "description": "Bánh mì nho khô thơm dừa ngọt bùi, mềm mịn.",
+    "quantity": 20,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/o9LnxcW.png",
+    "sizePrice": {
+      "S": 67000,
+      "M": 75000,
+      "L": 84000
+    }
+  },
+  {
+    "name": "Bánh mì hoa cúc",
+    "description": "Bánh mì hoa cúc mềm mại, thơm lừng hương bơ.",
+    "quantity": 10,
+    "category": "Food",
+    "imageUrl": "https://i.imgur.com/7qF4VWv.png",
+    "sizePrice": {
+      "S": 75000,
+      "M": 83000,
+      "L": 91000
+    }
+  }
+]
