@@ -266,7 +266,7 @@
   {
     "name": "Bánh comboloni",
     "description": "Bánh ngọt nhân kem béo ngậy, mềm mịn thơm ngon.",
-    "quantity": 30,
+    "quantity": 300,
     "category": "Food",
     "imageUrl": "https://i.imgur.com/0sECzf8.png",
     "sizePrice": {
@@ -278,7 +278,7 @@
   {
     "name": "Bánh sừng bò mini chấm sốt",
     "description": "Bánh sừng bò mini, chấm sốt đậm đà thơm ngon.",
-    "quantity": 25,
+    "quantity": 250,
     "category": "Food",
     "imageUrl": "https://i.imgur.com/UVeHhvm.png",
     "sizePrice": {
@@ -290,7 +290,7 @@
   {
     "name": "Bánh mì nguyên cám",
     "description": "Bánh mì nguyên cám, giàu dinh dưỡng, thơm ngon.",
-    "quantity": 20,
+    "quantity": 200,
     "category": "Food",
     "imageUrl": "https://i.imgur.com/PoGZaRZ.png",
     "sizePrice": {
@@ -302,7 +302,7 @@
   {
     "name": "Bánh mì khoai lang phô mai",
     "description": "Bánh mì khoai lang hòa quyện phô mai béo ngậy.",
-    "quantity": 15,
+    "quantity": 150,
     "category": "Food",
     "imageUrl": "https://i.imgur.com/KT6z8BG.png",
     "sizePrice": {
@@ -314,7 +314,7 @@
   {
     "name": "Bánh mì nho dừa",
     "description": "Bánh mì nho khô thơm dừa ngọt bùi, mềm mịn.",
-    "quantity": 20,
+    "quantity": 200,
     "category": "Food",
     "imageUrl": "https://i.imgur.com/o9LnxcW.png",
     "sizePrice": {
@@ -326,7 +326,7 @@
   {
     "name": "Bánh mì hoa cúc",
     "description": "Bánh mì hoa cúc mềm mại, thơm lừng hương bơ.",
-    "quantity": 10,
+    "quantity": 100,
     "category": "Food",
     "imageUrl": "https://i.imgur.com/7qF4VWv.png",
     "sizePrice": {
