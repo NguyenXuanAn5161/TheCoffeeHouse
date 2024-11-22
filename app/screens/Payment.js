@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  Alert,
 } from "react-native";
 import { Provider } from "react-native-paper";
 import { globalStyles, colors, fontSizes } from "@/styles/globalStyles";
@@ -17,8 +16,9 @@ import PaymentMethodDialog from "@components/PaymentMethodDialog";
 import { MaterialIcons } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
 import { order } from "@/service/order";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import useUserData from "@/hooks/useUserData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const paymentMethods = ["Tiền mặt", "Chuyển khoản", "Ví điện tử"];
 const SHIPPING_FEE = 0;
@@ -28,19 +28,8 @@ const Payment = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(paymentMethods[0]);
-  const [user, setUser] = useState();
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
+  const user = useUserData();
 
   const { selectedItems } = route.params;
 
@@ -94,7 +83,9 @@ const Payment = ({ navigation, route }) => {
           text1: "Thành công",
           text2: res.message,
         });
-        navigation.navigate("Home");
+        await AsyncStorage.setItem("HistoryOrderBack", JSON.stringify(true));
+        route.params.resetSelectedItems?.();
+        navigation.navigate("HistoryOrder", { status: "PENDING" });
       } else {
         Toast.show({
           type: "error",
@@ -116,7 +107,7 @@ const Payment = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
           style={{ paddingHorizontal: 16 }}
         >
-          <View style={{ rowGap: 10, marginTop: 10 }}>
+          <View style={{ rowGap: 10, marginVertical: 10 }}>
             {selectedItems.map((item) => (
               <CartItemPayment key={item.id} item={item} />
             ))}

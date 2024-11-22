@@ -16,98 +16,21 @@ import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
+import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
+import useUserData from "@/hooks/useUserData";
 
 const category = [
   { id: 1, name: "Coffee" },
   { id: 2, name: "Food" },
 ];
 
-// const product = [
-//   {
-//     id: 1,
-//     img: require("@/assets/images/capuchino.png"),
-//     title: "Capuchino",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 1,
-//   },
-//   {
-//     id: 2,
-//     img: require("@/assets/images/americano.png"),
-//     title: "Americano",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 1,
-//   },
-//   {
-//     id: 3,
-//     img: require("@/assets/images/mocha.png"),
-//     title: "Mocha",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 1,
-//   },
-//   {
-//     id: 4,
-//     img: require("@/assets/images/vanilla.png"),
-//     title: "Vanilla",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 1,
-//   },
-//   {
-//     id: 5,
-//     img: require("@/assets/images/vanilla.png"),
-//     title: "Vanilla",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 1,
-//   },
-//   {
-//     id: 6,
-//     img: require("@/assets/images/vanilla.png"),
-//     title: "Vanilla",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 1,
-//   },
-//   {
-//     id: 7,
-//     img: require("@/assets/images/banhmi.png"),
-//     title: "Bánh mì",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 2,
-//   },
-//   {
-//     id: 8,
-//     img: require("@/assets/images/banh-mi-sung-bo.png"),
-//     title: "Bánh mì",
-//     price: "đ35.000",
-//     discount: "With chocolate and milk",
-//     categoryId: 2,
-//   },
-// ];
-
 const Products = ({ navigation }) => {
   const [product, setProduct] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(category[0].name);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState();
+  const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
 
-  useFocusEffect(
-    React.useCallback(() => {
-      getUserData();
-    }, [])
-  );
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
+  const user = useUserData();
 
   const handleProductPress = (id) => {
     navigation.navigate("ProductDetail", { id });
@@ -133,7 +56,7 @@ const Products = ({ navigation }) => {
   };
 
   const handleAddToCart = async (productId) => {
-    setLoading(true);
+    setLoadingBtnPlus((prev) => ({ ...prev, [productId]: true }));
     try {
       const res = await addShoppingCart(user.id, productId, "S", "1");
 
@@ -151,9 +74,9 @@ const Products = ({ navigation }) => {
         });
       }
     } catch (error) {
-      console.log("Error file Home", error);
+      console.log("Error file product", error);
     } finally {
-      setLoading(false);
+      setLoadingBtnPlus((prev) => ({ ...prev, [productId]: false }));
     }
   };
 
@@ -203,15 +126,27 @@ const Products = ({ navigation }) => {
           </ScrollView>
 
           <View style={styles.productGrid}>
-            {filteredProducts.map((item) => (
-              <View key={item.id} style={{ width: "45%" }}>
-                <ProductCard
-                  product={item}
-                  onPress={() => handleProductPress(item.id)}
-                  onAdd={() => handleAddToCart(item.id)}
-                />
-              </View>
-            ))}
+            {loading ? (
+              <>
+                <View style={{ width: "45%" }}>
+                  <ProductCardSkeleton />
+                </View>
+                <View style={{ width: "45%" }}>
+                  <ProductCardSkeleton />
+                </View>
+              </>
+            ) : (
+              filteredProducts.map((item) => (
+                <View key={item.id} style={{ width: "45%" }}>
+                  <ProductCard
+                    loadingBtnPlus={loadingBtnPlus[item.id]}
+                    product={item}
+                    onPress={() => handleProductPress(item.id)}
+                    onAdd={() => handleAddToCart(item.id)}
+                  />
+                </View>
+              ))
+            )}
           </View>
         </View>
       </ScrollView>

@@ -18,8 +18,6 @@ import {
 import { getProductById } from "@/service/product";
 import Toast from "react-native-toast-message";
 import { addShoppingCart } from "@/service/shoppingCart";
-import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import CustomButton from "@/components/CustomButton";
 
 const ProductDetail = ({ route }) => {
@@ -28,31 +26,16 @@ const ProductDetail = ({ route }) => {
   const [sizes, setSizes] = useState([]);
   const [selectedSize, setSelectedSize] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { id } = route.params;
-  const [user, setUser] = useState();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      getUserData();
-    }, [])
-  );
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
+  const { productId, userId } = route.params;
 
   useEffect(() => {
-    getProduct(id);
-  }, [id]);
+    getProduct(productId);
+  }, [productId]);
 
-  const getProduct = async (id) => {
+  const getProduct = async (productId) => {
     setLoading(true);
     try {
-      const res = await getProductById(id);
+      const res = await getProductById(productId);
       if (res.success) {
         const { sizePrice } = res.data;
         const sortedSizes = ["S", "M", "L"].map((size) => ({
@@ -86,7 +69,7 @@ const ProductDetail = ({ route }) => {
     setLoading(true);
     try {
       const res = await addShoppingCart(
-        user.id,
+        userId,
         product.id,
         selectedSize.size,
         quantity

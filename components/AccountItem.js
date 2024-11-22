@@ -10,6 +10,7 @@ import {
   SimpleLineIcons,
 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import Toast from "react-native-toast-message";
 
 const items = [
   {
@@ -26,6 +27,8 @@ const items = [
     id: 3,
     name: "Hóa đơn",
     icon: <Ionicons name="receipt" size={24} color={colors.primary} />,
+    navigate: "HistoryOrder",
+    status: "DELIVERED",
   },
   {
     id: 4,
@@ -63,14 +66,26 @@ const AccountItem = ({ userData, navigation }) => {
     navigation.navigate("UpdateUser", { user });
   };
 
+  const handleItemPress = (item) => {
+    if (item?.navigate) {
+      navigation.navigate(item.navigate, {
+        ...(item.status && { status: item.status }),
+      });
+    } else {
+      Toast.show({
+        type: "info",
+        text1: "Thông báo",
+        text2: "Tính năng sẽ được sớm cập nhật",
+      });
+    }
+  };
+
   return (
     <>
       {items.map((item) => (
         <View key={item.id}>
           <View style={styles.itemLine} />
-          <Pressable
-            onPress={() => item?.navigate && navigation.navigate(item.navigate)}
-          >
+          <Pressable onPress={() => handleItemPress(item)}>
             <View style={styles.item}>
               <View style={{ width: 35 }}>{item.icon}</View>
               <Text style={styles.txtItems}>{item.name}</Text>

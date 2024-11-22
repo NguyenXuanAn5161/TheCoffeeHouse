@@ -9,6 +9,7 @@ import Canceled from "@/app/screens/HistoryOrder/Canceled";
 import { View } from "react-native";
 import { orderStatusData } from "@/service/order";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import useUserData from "@/hooks/useUserData";
 
 const labels = ["Pendding", "Processing", "Shipped", "Delivered", "Canceled"];
 
@@ -87,19 +88,8 @@ export default function HistoryOrderTab({ route }) {
 const CurrentStepScreen = ({ currentPosition }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
-  const [user, setUser] = useState();
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
+  const user = useUserData();
 
   useEffect(() => {
     if (user?.id) {

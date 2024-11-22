@@ -14,9 +14,9 @@ import CustomBanner from "@/components/CustomBanner";
 import { getAllProduct } from "@/service/product";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
-import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useWebSocket } from "@/hooks/websocket";
+import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
+import useUserData from "@/hooks/useUserData";
 
 const category = [
   {
@@ -40,8 +40,10 @@ export default function Home({ navigation }) {
   const [dataCategory, setDataCategory] = useState(category);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [user, setUser] = useState();
+  const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
+  // const [user, setUser] = useState();
   // ----------------------------------------------------------
+  const user = useUserData();
   // Sử dụng hook useWebSocket
   const { isConnected } = useWebSocket(user?.id);
   useEffect(() => {
@@ -52,19 +54,6 @@ export default function Home({ navigation }) {
     }
   }, [isConnected]);
   // ----------------------------------------------------------
-  useFocusEffect(
-    React.useCallback(() => {
-      getUserData();
-    }, [])
-  );
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
 
   useEffect(() => {
     getProducts();
@@ -86,7 +75,7 @@ export default function Home({ navigation }) {
   };
 
   const handleAddToCart = async (productId) => {
-    setLoading(true);
+    setLoadingBtnPlus((prev) => ({ ...prev, [productId]: true }));
     try {
       const res = await addShoppingCart(user.id, productId, "S", "1");
 
@@ -106,12 +95,12 @@ export default function Home({ navigation }) {
     } catch (error) {
       console.log("Error file Home", error);
     } finally {
-      setLoading(false);
+      setLoadingBtnPlus((prev) => ({ ...prev, [productId]: false }));
     }
   };
 
-  const handleProductPress = (id) => {
-    navigation.navigate("ProductDetail", { id });
+  const handleProductPress = (productId) => {
+    navigation.navigate("ProductDetail", { productId, userId: user.id });
   };
 
   return (
@@ -152,15 +141,27 @@ export default function Home({ navigation }) {
             <Text style={styles.text_title_product}>Sản phẩm mới</Text>
 
             <View style={styles.viewProduct}>
-              {product.map((item, index) => (
-                <View key={item.id} style={{ width: "45%" }}>
-                  <ProductCard
-                    product={item}
-                    onPress={() => handleProductPress(item.id)}
-                    onAdd={() => handleAddToCart(item.id)}
-                  />
-                </View>
-              ))}
+              {loading ? (
+                <>
+                  <View style={{ width: "45%" }}>
+                    <ProductCardSkeleton />
+                  </View>
+                  <View style={{ width: "45%" }}>
+                    <ProductCardSkeleton />
+                  </View>
+                </>
+              ) : (
+                product.map((item, index) => (
+                  <View key={item.id} style={{ width: "45%" }}>
+                    <ProductCard
+                      loadingBtnPlus={loadingBtnPlus[item.id]}
+                      product={item}
+                      onPress={() => handleProductPress(item.id)}
+                      onAdd={() => handleAddToCart(item.id)}
+                    />
+                  </View>
+                ))
+              )}
             </View>
           </View>
         </View>
