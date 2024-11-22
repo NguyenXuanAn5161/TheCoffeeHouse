@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
 import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
+import useUserData from "@/hooks/useUserData";
 
 const category = [
   { id: 1, name: "Coffee" },
@@ -28,21 +29,8 @@ const Products = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(category[0].name);
   const [loading, setLoading] = useState(false);
   const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
-  const [user, setUser] = useState();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      getUserData();
-    }, [])
-  );
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
+  const user = useUserData();
 
   const handleProductPress = (id) => {
     navigation.navigate("ProductDetail", { id });
