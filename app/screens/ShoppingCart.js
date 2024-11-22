@@ -17,6 +17,7 @@ import {
   udpateQuantityCartItem,
 } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
+import CartItemCardSkeleton from "@/components/skeleton/CartItemCardSkeleton";
 
 const ShoppingCart = ({ navigation }) => {
   const [cartItems, setCartItems] = useState([]);
@@ -174,16 +175,20 @@ const ShoppingCart = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        {cartItems.map((item) => (
-          <CartItemCard
-            key={item.id}
-            product={item}
-            isChecked={selectedItems.some((i) => i.id === item.id)} // Kiểm tra sản phẩm có trong mảng selectedItems không
-            onCheck={() => handleCheckItem(item)}
-            onRemove={() => handleRemoveItem(item.id)}
-            onQuantityChange={handleQuantityChange}
-          />
-        ))}
+        {loading ? (
+          <CartItemCardSkeleton />
+        ) : (
+          cartItems.map((item) => (
+            <CartItemCard
+              key={item.id}
+              product={item}
+              isChecked={selectedItems.some((i) => i.id === item.id)} // Kiểm tra sản phẩm có trong mảng selectedItems không
+              onCheck={() => handleCheckItem(item)}
+              onRemove={() => handleRemoveItem(item.id)}
+              onQuantityChange={handleQuantityChange}
+            />
+          ))
+        )}
       </ScrollView>
 
       {/* Checkout Section */}
@@ -209,10 +214,24 @@ const ShoppingCart = ({ navigation }) => {
           </Text>
         </View>
         <TouchableOpacity
+          disabled={selectedItems.length === 0 ? true : false}
           onPress={() => handleOrderPayment()}
-          style={styles.checkoutButton}
+          style={[
+            styles.checkoutButton,
+            {
+              backgroundColor:
+                selectedItems.length === 0 ? colors.greyBold : colors.primary,
+            },
+          ]}
         >
-          <Text style={styles.checkoutButtonText}>Đặt hàng</Text>
+          <Text
+            style={[
+              styles.checkoutButtonText,
+              { color: selectedItems.length === 0 ? "#000" : colors.white },
+            ]}
+          >
+            Đặt hàng
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
