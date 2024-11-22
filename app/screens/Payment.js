@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   TextInput,
-  Alert,
 } from "react-native";
 import { Provider } from "react-native-paper";
 import { globalStyles, colors, fontSizes } from "@/styles/globalStyles";
@@ -17,8 +16,8 @@ import PaymentMethodDialog from "@components/PaymentMethodDialog";
 import { MaterialIcons } from "@expo/vector-icons";
 import CustomButton from "@/components/CustomButton";
 import { order } from "@/service/order";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import Toast from "react-native-toast-message";
+import useUserData from "@/hooks/useUserData";
 
 const paymentMethods = ["Tiền mặt", "Chuyển khoản", "Ví điện tử"];
 const SHIPPING_FEE = 0;
@@ -28,19 +27,8 @@ const Payment = ({ navigation, route }) => {
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(paymentMethods[0]);
-  const [user, setUser] = useState();
 
-  useEffect(() => {
-    getUserData();
-  }, []);
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
+  const user = useUserData();
 
   const { selectedItems } = route.params;
 

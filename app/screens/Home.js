@@ -14,10 +14,9 @@ import CustomBanner from "@/components/CustomBanner";
 import { getAllProduct } from "@/service/product";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
-import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useWebSocket } from "@/hooks/websocket";
 import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
+import useUserData from "@/hooks/useUserData";
 
 const category = [
   {
@@ -42,8 +41,9 @@ export default function Home({ navigation }) {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
-  const [user, setUser] = useState();
+  // const [user, setUser] = useState();
   // ----------------------------------------------------------
+  const user = useUserData();
   // Sử dụng hook useWebSocket
   const { isConnected } = useWebSocket(user?.id);
   useEffect(() => {
@@ -54,19 +54,6 @@ export default function Home({ navigation }) {
     }
   }, [isConnected]);
   // ----------------------------------------------------------
-  useFocusEffect(
-    React.useCallback(() => {
-      getUserData();
-    }, [])
-  );
-
-  const getUserData = async () => {
-    const userData = await AsyncStorage.getItem("user");
-    if (userData) {
-      const data = JSON.parse(userData);
-      setUser(data);
-    }
-  };
 
   useEffect(() => {
     getProducts();
@@ -112,8 +99,8 @@ export default function Home({ navigation }) {
     }
   };
 
-  const handleProductPress = (id) => {
-    navigation.navigate("ProductDetail", { id });
+  const handleProductPress = (productId) => {
+    navigation.navigate("ProductDetail", { productId, userId: user.id });
   };
 
   return (
