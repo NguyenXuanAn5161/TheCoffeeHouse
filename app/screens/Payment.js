@@ -104,7 +104,7 @@ const Payment = ({ navigation, route }) => {
           showsVerticalScrollIndicator={false}
           style={{ paddingHorizontal: 16 }}
         >
-          <View style={{ rowGap: 10, marginTop: 10 }}>
+          <View style={{ rowGap: 10, marginVertical: 10 }}>
             {selectedItems.map((item) => (
               <CartItemPayment key={item.id} item={item} />
             ))}
