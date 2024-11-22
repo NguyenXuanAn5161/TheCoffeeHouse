@@ -11,26 +11,38 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import Payment from "@/app/screens/Payment";
 import UpdateUser from "@/app/screens/UpdateUser";
 import HistoryOrder from "@/app/screens/HistoryOrder/HistoryOrder";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const Stack = createStackNavigator();
 
-const HeaderBackButton = ({ navigation, withBackground = true, color }) => (
-  <Pressable onPress={() => navigation.goBack()} style={styles.headerButton}>
-    <View
-      style={[
-        styles.buttonContainer,
-        withBackground && globalStyles.shadow,
-        { backgroundColor: withBackground ? colors.white : "transparent" },
-      ]}
-    >
-      <MaterialIcons
-        name="keyboard-arrow-left"
-        size={30}
-        color={color ? colors.white : colors.primary}
-      />
-    </View>
-  </Pressable>
-);
+const HeaderBackButton = ({ navigation, withBackground = true, color }) => {
+  const handleGoBack = async () => {
+    const value = await AsyncStorage.getItem("HistoryOrderBack");
+    if (value) {
+      navigation.pop(2); // Quay lại 2 màn hình trước
+    } else {
+      navigation.goBack();
+    }
+  };
+
+  return (
+    <Pressable onPress={() => handleGoBack()} style={styles.headerButton}>
+      <View
+        style={[
+          styles.buttonContainer,
+          withBackground && globalStyles.shadow,
+          { backgroundColor: withBackground ? colors.white : "transparent" },
+        ]}
+      >
+        <MaterialIcons
+          name="keyboard-arrow-left"
+          size={30}
+          color={color ? colors.white : colors.primary}
+        />
+      </View>
+    </Pressable>
+  );
+};
 
 const HeaderCartButton = ({ navigation }) => (
   <Pressable

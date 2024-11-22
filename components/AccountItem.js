@@ -26,6 +26,8 @@ const items = [
     id: 3,
     name: "Hóa đơn",
     icon: <Ionicons name="receipt" size={24} color={colors.primary} />,
+    navigate: "HistoryOrder",
+    status: "DELIVERED",
   },
   {
     id: 4,
@@ -69,7 +71,12 @@ const AccountItem = ({ userData, navigation }) => {
         <View key={item.id}>
           <View style={styles.itemLine} />
           <Pressable
-            onPress={() => item?.navigate && navigation.navigate(item.navigate)}
+            onPress={() =>
+              item?.navigate &&
+              navigation.navigate(item.navigate, {
+                ...(item.status && { status: item.status }), // Only pass status if it exists
+              })
+            }
           >
             <View style={styles.item}>
               <View style={{ width: 35 }}>{item.icon}</View>

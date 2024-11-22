@@ -18,6 +18,7 @@ import CustomButton from "@/components/CustomButton";
 import { order } from "@/service/order";
 import Toast from "react-native-toast-message";
 import useUserData from "@/hooks/useUserData";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const paymentMethods = ["Tiền mặt", "Chuyển khoản", "Ví điện tử"];
 const SHIPPING_FEE = 0;
@@ -82,7 +83,8 @@ const Payment = ({ navigation, route }) => {
           text1: "Thành công",
           text2: res.message,
         });
-        navigation.navigate("Home");
+        await AsyncStorage.setItem("HistoryOrderBack", JSON.stringify(true));
+        navigation.navigate("HistoryOrder", { status: "PENDING" });
       } else {
         Toast.show({
           type: "error",
