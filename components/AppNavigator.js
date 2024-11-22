@@ -19,6 +19,7 @@ const HeaderBackButton = ({ navigation, withBackground = true, color }) => {
   const handleGoBack = async () => {
     const value = await AsyncStorage.getItem("HistoryOrderBack");
     if (value) {
+      await AsyncStorage.removeItem("HistoryOrderBack");
       navigation.pop(2); // Quay lại 2 màn hình trước
     } else {
       navigation.goBack();

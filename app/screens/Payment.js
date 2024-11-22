@@ -84,6 +84,7 @@ const Payment = ({ navigation, route }) => {
           text2: res.message,
         });
         await AsyncStorage.setItem("HistoryOrderBack", JSON.stringify(true));
+        route.params.resetSelectedItems?.();
         navigation.navigate("HistoryOrder", { status: "PENDING" });
       } else {
         Toast.show({

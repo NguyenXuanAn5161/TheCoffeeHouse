@@ -169,7 +169,10 @@ const ShoppingCart = ({ navigation }) => {
   };
 
   const handleOrderPayment = () => {
-    navigation.navigate("Payment", { selectedItems });
+    navigation.navigate("Payment", {
+      selectedItems,
+      resetSelectedItems: () => setSelectedItems([]), // truyền hàm reset
+    });
   };
 
   return (
