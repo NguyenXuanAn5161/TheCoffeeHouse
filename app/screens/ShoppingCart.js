@@ -135,7 +135,7 @@ const ShoppingCart = ({ navigation }) => {
   };
 
   const handleQuantityChange = async (productId, newQuantity) => {
-    setLoading(true);
+    // setLoading(true);
     try {
       // Cập nhật số lượng trong local state
       setCartItems((prevCartItems) =>
@@ -163,7 +163,7 @@ const ShoppingCart = ({ navigation }) => {
     } catch (error) {
       console.log("Error file shopping cart: ", error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
       calculateTotalPrice();
     }
   };
