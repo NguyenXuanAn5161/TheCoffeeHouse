@@ -17,6 +17,7 @@ import Toast from "react-native-toast-message";
 import { useFocusEffect } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useWebSocket } from "@/hooks/websocket";
+import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
 
 const category = [
   {
@@ -152,15 +153,26 @@ export default function Home({ navigation }) {
             <Text style={styles.text_title_product}>Sản phẩm mới</Text>
 
             <View style={styles.viewProduct}>
-              {product.map((item, index) => (
-                <View key={item.id} style={{ width: "45%" }}>
-                  <ProductCard
-                    product={item}
-                    onPress={() => handleProductPress(item.id)}
-                    onAdd={() => handleAddToCart(item.id)}
-                  />
-                </View>
-              ))}
+              {loading ? (
+                <>
+                  <View style={{ width: "45%" }}>
+                    <ProductCardSkeleton />
+                  </View>
+                  <View style={{ width: "45%" }}>
+                    <ProductCardSkeleton />
+                  </View>
+                </>
+              ) : (
+                product.map((item, index) => (
+                  <View key={item.id} style={{ width: "45%" }}>
+                    <ProductCard
+                      product={item}
+                      onPress={() => handleProductPress(item.id)}
+                      onAdd={() => handleAddToCart(item.id)}
+                    />
+                  </View>
+                ))
+              )}
             </View>
           </View>
         </View>
