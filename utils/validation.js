@@ -3,7 +3,7 @@ import * as Yup from "yup";
 export const validationLoginRegister = Yup.object().shape({
   username: Yup.string()
     .required("Vui lòng nhập tài khoản")
-    .matches(/^[a-z][A-Z]/, "Tài khoản phải bắt đầu bằng chữ cái!"),
+    .matches(/^[a-zA-Z]/, "Tài khoản phải bắt đầu bằng chữ cái!"),
   password: Yup.string()
     .min(6, "Mật khẩu phải có ít nhất 6 ký tự")
     .required("Vui lòng nhập mật khẩu"),
