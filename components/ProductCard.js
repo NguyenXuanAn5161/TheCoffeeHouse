@@ -1,9 +1,42 @@
-import React from "react";
-import { View, Text, Image, Pressable, StyleSheet } from "react-native";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import React, { useEffect, useRef } from "react";
+import {
+  View,
+  Text,
+  Image,
+  Pressable,
+  StyleSheet,
+  Animated,
+} from "react-native";
+import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 
-const ProductCard = ({ product, onPress, onAdd }) => {
+const ProductCard = ({ product, onPress, onAdd, loadingBtnPlus }) => {
+  // Tạo một ref Animated để xoay vòng
+  const rotateAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    if (loadingBtnPlus) {
+      // Bắt đầu xoay vòng khi loadingBtnPlus là true
+      Animated.loop(
+        Animated.timing(rotateAnim, {
+          toValue: 1, // Quay 1 vòng
+          duration: 1000, // Thời gian hoàn thành 1 vòng quay
+          useNativeDriver: true,
+        })
+      ).start();
+    } else {
+      // Dừng xoay vòng khi không còn loading
+      rotateAnim.stopAnimation();
+      rotateAnim.setValue(0); // Quay về vị trí ban đầu
+    }
+  }, [loadingBtnPlus, rotateAnim]);
+
+  // Chuyển đổi giá trị của rotateAnim sang góc quay
+  const rotate = rotateAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["0deg", "360deg"], // Quay từ 0 độ đến 360 độ
+  });
+
   return (
     <View style={[styles.card, globalStyles.shadow]}>
       <Pressable onPress={onPress} style={styles.product}>
@@ -19,12 +52,23 @@ const ProductCard = ({ product, onPress, onAdd }) => {
         </View>
       </Pressable>
       <Pressable onPress={onAdd} style={styles.btn_add}>
-        <FontAwesome5
-          name="plus"
-          size={18}
-          color="white"
-          style={styles.icon_plus}
-        />
+        {loadingBtnPlus ? (
+          <Animated.View style={{ transform: [{ rotate }] }}>
+            <MaterialCommunityIcons
+              name="reload"
+              size={fontSizes.sz18}
+              color={colors.white}
+              style={styles.iconReload}
+            />
+          </Animated.View>
+        ) : (
+          <FontAwesome5
+            name="plus"
+            size={fontSizes.sz18}
+            color={colors.white}
+            style={styles.iconPlus}
+          />
+        )}
       </Pressable>
     </View>
   );
@@ -87,7 +131,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
   },
-  icon_plus: {
+  iconPlus: {
     fontSize: fontSizes.small,
     color: "#fff",
   },

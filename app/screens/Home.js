@@ -41,6 +41,7 @@ export default function Home({ navigation }) {
   const [dataCategory, setDataCategory] = useState(category);
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
   const [user, setUser] = useState();
   // ----------------------------------------------------------
   // Sử dụng hook useWebSocket
@@ -87,7 +88,7 @@ export default function Home({ navigation }) {
   };
 
   const handleAddToCart = async (productId) => {
-    setLoading(true);
+    setLoadingBtnPlus((prev) => ({ ...prev, [productId]: true }));
     try {
       const res = await addShoppingCart(user.id, productId, "S", "1");
 
@@ -107,7 +108,7 @@ export default function Home({ navigation }) {
     } catch (error) {
       console.log("Error file Home", error);
     } finally {
-      setLoading(false);
+      setLoadingBtnPlus((prev) => ({ ...prev, [productId]: false }));
     }
   };
 
@@ -166,6 +167,7 @@ export default function Home({ navigation }) {
                 product.map((item, index) => (
                   <View key={item.id} style={{ width: "45%" }}>
                     <ProductCard
+                      loadingBtnPlus={loadingBtnPlus[item.id]}
                       product={item}
                       onPress={() => handleProductPress(item.id)}
                       onAdd={() => handleAddToCart(item.id)}
