@@ -5,7 +5,7 @@ import { FlatList, StyleSheet, Text, View } from "react-native";
 import { Button, Modal, Portal, Provider } from "react-native-paper";
 import Toast from "react-native-toast-message";
 
-const PendingOrders = ({ pendingData, getOrderData }) => {
+const PendingOrders = ({ data, getOrderData }) => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -44,13 +44,11 @@ const PendingOrders = ({ pendingData, getOrderData }) => {
     setSelectedOrder(null);
   };
 
-  const reversedData = [...pendingData].reverse();
-
   return (
     <Provider>
       <View style={{ flex: 1 }}>
         <FlatList
-          data={reversedData}
+          data={data}
           keyExtractor={(item) => item.orderId.toString()}
           renderItem={({ item }) => (
             <HistoryOrderCard
