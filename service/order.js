@@ -24,3 +24,14 @@ export const orderStatusData = async (userId) => {
     return error.response.data;
   }
 };
+
+export const cancelOrder = async (orderId) => {
+  try {
+    const response = await axios.put(`/api/orders/${orderId}/cancel`);
+    return response.data;
+  } catch (error) {
+    console.log("error api cancel order: ", error.response.data);
+
+    return error.response.data;
+  }
+};

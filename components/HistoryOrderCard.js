@@ -1,10 +1,18 @@
-import { FlatList, Image, StyleSheet, Text, View } from "react-native";
+import {
+  FlatList,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import { colors, fontSizes } from "@/styles/globalStyles";
 import CartItemPayment from "./CartItemPayment";
 import { formatTime } from "@/utils/formatTime";
+import { MaterialIcons } from "@expo/vector-icons";
 
-const HistoryOrderCard = ({ order }) => {
+const HistoryOrderCard = ({ order, handleCancelOrder }) => {
   const getStatusText = (status) => {
     switch (status) {
       case "PENDING":
@@ -24,7 +32,14 @@ const HistoryOrderCard = ({ order }) => {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>Mã đơn hàng: #{order.orderId}</Text>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.title}>Mã đơn hàng: #{order.orderId}</Text>
+        {order?.status === "PENDING" ? (
+          <Pressable onPress={handleCancelOrder}>
+            <MaterialIcons name="cancel" size={26} color={colors.danger} />
+          </Pressable>
+        ) : null}
+      </View>
       <Text>Ngày tạo: {formatTime(order.createdAt)}</Text>
       <Text>
         Trạng thái:{" "}
@@ -60,7 +75,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: colors.white,
     padding: 15,
-    margin: 10,
+    marginVertical: 10,
     borderRadius: 10,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
