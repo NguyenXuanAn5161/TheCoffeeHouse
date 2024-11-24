@@ -12,8 +12,6 @@ import CustomSearch from "@/components/CustomSearch";
 import { colors, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
 import { getAllProduct } from "@/service/product";
-import { useFocusEffect } from "@react-navigation/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
 import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
@@ -56,6 +54,19 @@ const Products = ({ navigation }) => {
   };
 
   const handleAddToCart = async (productId) => {
+    // Tìm sản phẩm trong danh sách sản phẩm
+    const selectedProduct = product.find((p) => p.id === productId);
+
+    // Kiểm tra số lượng
+    if (selectedProduct.quantity <= 0) {
+      Toast.show({
+        type: "error",
+        text1: "Thất bại",
+        text2: "Sản phẩm này đã hết hàng.",
+      });
+      return;
+    }
+
     setLoadingBtnPlus((prev) => ({ ...prev, [productId]: true }));
     try {
       const res = await addShoppingCart(user.id, productId, "S", "1");

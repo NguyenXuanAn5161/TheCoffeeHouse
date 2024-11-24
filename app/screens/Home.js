@@ -75,6 +75,19 @@ export default function Home({ navigation }) {
   };
 
   const handleAddToCart = async (productId) => {
+    // Tìm sản phẩm trong danh sách sản phẩm
+    const selectedProduct = product.find((p) => p.id === productId);
+
+    // Kiểm tra số lượng
+    if (selectedProduct.quantity <= 0) {
+      Toast.show({
+        type: "error",
+        text1: "Thất bại",
+        text2: "Sản phẩm này đã hết hàng.",
+      });
+      return;
+    }
+
     setLoadingBtnPlus((prev) => ({ ...prev, [productId]: true }));
     try {
       const res = await addShoppingCart(user.id, productId, "S", "1");
