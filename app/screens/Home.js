@@ -120,22 +120,6 @@ export default function Home({ navigation }) {
     navigation.navigate("ProductDetail", { productId, userId: user.id });
   };
 
-  const handleLoadMore = async () => {
-    if (product.length >= totalElement) return; // Kiểm tra xem đã tải hết chưa
-    setLoading(true);
-    try {
-      const res = await getAllproduct(page, size + 2, "", true, "");
-      if (res.success) {
-        setProduct(res.data);
-        setSize((prev) => prev + 1);
-      }
-    } catch (error) {
-      console.log("Error file Home: ", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <View style={globalStyles.container}>
       <ScrollView
@@ -209,13 +193,6 @@ export default function Home({ navigation }) {
             </View>
           </View>
         </View>
-
-        {/* Nút Xem thêm */}
-        {!loading && product.length < totalElement && (
-          <Pressable style={styles.loadMoreBtn} onPress={handleLoadMore}>
-            <Text style={styles.loadMoreText}>Xem thêm</Text>
-          </Pressable>
-        )}
       </ScrollView>
     </View>
   );
@@ -281,19 +258,6 @@ const styles = StyleSheet.create({
   newLabelText: {
     color: "white",
     fontSize: fontSizes.sz12,
-    fontWeight: "bold",
-  },
-  loadMoreBtn: {
-    alignSelf: "center",
-    backgroundColor: colors.primary,
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderRadius: 5,
-    marginVertical: 10,
-  },
-  loadMoreText: {
-    color: "white",
-    fontSize: fontSizes.sz15,
     fontWeight: "bold",
   },
 });
