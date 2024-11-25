@@ -7,7 +7,11 @@ import {
   StyleSheet,
   Animated,
 } from "react-native";
-import { FontAwesome5, MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  FontAwesome5,
+  MaterialCommunityIcons,
+  Entypo,
+} from "@expo/vector-icons";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 
 const ProductCard = ({ product, onPress, onAdd, loadingBtnPlus }) => {
@@ -41,6 +45,11 @@ const ProductCard = ({ product, onPress, onAdd, loadingBtnPlus }) => {
     <View style={[styles.card, globalStyles.shadow]}>
       <Pressable onPress={onPress} style={styles.product}>
         <Image source={{ uri: product.imageUrl }} style={styles.img_product} />
+        {product.quantity <= 0 && (
+          <View style={styles.outOfStockLabel}>
+            <Text style={styles.outOfStockText}>Hết hàng</Text>
+          </View>
+        )}
         <View style={styles.info_product}>
           <Text style={styles.title_product}>{product.name}</Text>
           <Text style={styles.discount_product}>{product.description}</Text>
@@ -61,9 +70,16 @@ const ProductCard = ({ product, onPress, onAdd, loadingBtnPlus }) => {
               style={styles.iconReload}
             />
           </Animated.View>
-        ) : (
+        ) : product.quantity > 0 ? (
           <FontAwesome5
             name="plus"
+            size={fontSizes.sz18}
+            color={colors.white}
+            style={styles.iconPlus}
+          />
+        ) : (
+          <Entypo
+            name="block"
             size={fontSizes.sz18}
             color={colors.white}
             style={styles.iconPlus}
@@ -134,6 +150,24 @@ const styles = StyleSheet.create({
   iconPlus: {
     fontSize: fontSizes.small,
     color: "#fff",
+  },
+  outOfStockLabel: {
+    alignSelf: "flex-end",
+    position: "absolute",
+    // top: -10, // Đẩy nhãn lên trên
+    // right: -10, // Đẩy nhãn sang phải ra ngoài
+    backgroundColor: "rgba(255, 0, 0, 0.8)", // Màu nền đỏ với độ trong suốt
+    // transform: [{ rotate: "45deg" }], // Xoay nhãn chéo
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 5,
+    zIndex: 10,
+  },
+  outOfStockText: {
+    fontSize: fontSizes.sz14,
+    color: colors.white,
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 

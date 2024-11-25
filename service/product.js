@@ -1,13 +1,26 @@
 import axios from "@/utils/axios";
 
-export const getAllProduct = async () => {
+export const getAllproduct = async (
+  page,
+  size,
+  category,
+  isNew,
+  nameProduct
+) => {
   try {
-    const response = await axios.get(`/api/products`);
+    const response = await axios.get(`/api/products`, {
+      params: {
+        page: page,
+        size: size,
+        category: category,
+        isNew: isNew,
+        name: nameProduct,
+      },
+    });
     return response.data;
   } catch (error) {
-    console.log("error api getAllProduct: ", error);
-
-    return error.response.data;
+    console.log("error api getProducts: ", error);
+    return error.response?.data;
   }
 };
 

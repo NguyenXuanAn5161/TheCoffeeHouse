@@ -66,6 +66,15 @@ const ProductDetail = ({ route }) => {
   };
 
   const handleAddToCart = async () => {
+    // Kiểm tra số lượng
+    if (product.quantity <= 0) {
+      Toast.show({
+        type: "error",
+        text1: "Thất bại",
+        text2: "Sản phẩm này đã hết hàng.",
+      });
+      return;
+    }
     setLoading(true);
     try {
       const res = await addShoppingCart(

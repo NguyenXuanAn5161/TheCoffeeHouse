@@ -118,11 +118,11 @@ const CurrentStepScreen = ({ currentPosition }) => {
   const canceledData = data.filter((order) => order.status === "CANCELED");
 
   const screens = [
-    <Pendding pendingData={pendingData} />,
-    <Processing processingData={processingData} />,
-    <Shipped shippedData={shippedData} />,
-    <Delivered deliveredData={deliveredData} />,
-    <Canceled canceledData={canceledData} />,
+    <Pendding data={pendingData} getOrderData={getOrderData} />,
+    <Processing data={processingData} />,
+    <Shipped data={shippedData} />,
+    <Delivered data={deliveredData} />,
+    <Canceled data={canceledData} />,
   ];
 
   return (

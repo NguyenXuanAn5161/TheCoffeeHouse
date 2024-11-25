@@ -9,7 +9,9 @@
       "S": 30000,
       "M": 35000,
       "L": 40000
-    }
+    },
+    "isNew": true,
+    "newUntil": "2024-12-31T23:59:59"
   },
   {
     "name": "Mocha",
@@ -21,7 +23,9 @@
       "S": 40000,
       "M": 45000,
       "L": 50000
-    }
+    },
+    "isNew": true,
+    "newUntil": "2024-12-31T23:59:59"
   },
   {
     "name": "Cappuccino",
@@ -33,7 +37,9 @@
       "S": 35000,
       "M": 40000,
       "L": 45000
-    }
+    },
+    "isNew": true,
+    "newUntil": "2024-12-31T23:59:59"
   },
   {
     "name": "Espresso",
@@ -45,7 +51,9 @@
       "S": 25000,
       "M": 30000,
       "L": 35000
-    }
+    },
+    "isNew": true,
+    "newUntil": "2024-12-31T23:59:59"
   },
   {
     "name": "Latte",
@@ -57,7 +65,9 @@
       "S": 35000,
       "M": 40000,
       "L": 45000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Vanilla Latte",
@@ -69,7 +79,9 @@
       "S": 38000,
       "M": 43000,
       "L": 48000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Chocolate Latte",
@@ -81,7 +93,9 @@
       "S": 40000,
       "M": 45000,
       "L": 50000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Iced Latte",
@@ -93,7 +107,9 @@
       "S": 35000,
       "M": 40000,
       "L": 45000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Iced Mocha",
@@ -105,7 +121,9 @@
       "S": 40000,
       "M": 45000,
       "L": 50000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Iced Lemon",
@@ -117,7 +135,9 @@
       "S": 15000,
       "M": 20000,
       "L": 25000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Iced Latte",
@@ -129,7 +149,9 @@
       "S": 35000,
       "M": 40000,
       "L": 45000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Vanilla Tea",
@@ -141,7 +163,9 @@
       "S": 25000,
       "M": 30000,
       "L": 35000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Iced Mocha",
@@ -153,7 +177,9 @@
       "S": 40000,
       "M": 45000,
       "L": 50000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Iced Lemon",
@@ -165,7 +191,9 @@
       "S": 15000,
       "M": 20000,
       "L": 25000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Cà phê muối",
@@ -177,7 +205,9 @@
       "S": 15000,
       "M": 20000,
       "L": 25000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bạc xỉu kem muối",
@@ -189,7 +219,9 @@
       "S": 25000,
       "M": 30000,
       "L": 35000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Nâu đá",
@@ -201,7 +233,9 @@
       "S": 20000,
       "M": 25000,
       "L": 30000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Sữa tươi cà phê",
@@ -213,7 +247,9 @@
       "S": 30000,
       "M": 35000,
       "L": 40000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bạc xỉu",
@@ -225,7 +261,9 @@
       "S": 20000,
       "M": 25000,
       "L": 30000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Đen đá",
@@ -237,7 +275,9 @@
       "S": 15000,
       "M": 20000,
       "L": 25000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Coldbrew",
@@ -249,7 +289,9 @@
       "S": 30000,
       "M": 35000,
       "L": 40000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Trà tắc xí muội",
@@ -261,7 +303,9 @@
       "S": 25000,
       "M": 30000,
       "L": 35000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bánh comboloni",
@@ -273,7 +317,9 @@
       "S": 52000,
       "M": 60000,
       "L": 68000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bánh sừng bò mini chấm sốt",
@@ -285,7 +331,9 @@
       "S": 60000,
       "M": 67000,
       "L": 75000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bánh mì nguyên cám",
@@ -297,7 +345,9 @@
       "S": 68000,
       "M": 75000,
       "L": 82000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bánh mì khoai lang phô mai",
@@ -309,7 +359,9 @@
       "S": 75000,
       "M": 82000,
       "L": 90000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bánh mì nho dừa",
@@ -321,7 +373,9 @@
       "S": 67000,
       "M": 75000,
       "L": 84000
-    }
+    },
+    "isNew": false,
+    "newUntil": null
   },
   {
     "name": "Bánh mì hoa cúc",
