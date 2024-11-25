@@ -9,13 +9,14 @@ import {
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import CustomSearch from "@/components/CustomSearch";
-import { colors, globalStyles } from "@/styles/globalStyles";
+import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
-import { getAllProduct } from "@/service/product";
+import { getAllproduct, getAllProduct } from "@/service/product";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
 import ProductCardSkeleton from "@/components/skeleton/ProductCardSkeleton";
 import useUserData from "@/hooks/useUserData";
+import { FlatList } from "react-native";
 
 const category = [
   { id: 1, name: "Coffee" },
@@ -27,6 +28,9 @@ const Products = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState(category[0].name);
   const [loading, setLoading] = useState(false);
   const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const [totalElement, setTotalElement] = useState();
 
   const user = useUserData();
 
@@ -41,10 +45,11 @@ const Products = ({ navigation }) => {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const res = await getAllProduct();
+      const res = await getAllproduct(page, size, "", null, "");
 
       if (res.success) {
         setProduct(res.data);
+        setTotalElement(res.totalElements);
       }
     } catch (error) {
       console.log("Error file Product: ", error);
@@ -148,7 +153,16 @@ const Products = ({ navigation }) => {
               </>
             ) : (
               filteredProducts.map((item) => (
-                <View key={item.id} style={{ width: "45%" }}>
+                <View
+                  key={item.id}
+                  style={{ width: "45%", position: "relative" }}
+                >
+                  {/* Nếu sản phẩm mới, hiển thị nhãn */}
+                  {item.isNew && (
+                    <View style={styles.newLabel}>
+                      <Text style={styles.newLabelText}>Mới</Text>
+                    </View>
+                  )}
                   <ProductCard
                     loadingBtnPlus={loadingBtnPlus[item.id]}
                     product={item}
@@ -207,5 +221,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     marginTop: 10,
     rowGap: 5,
+  },
+  newLabel: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: colors.primary,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    zIndex: 1,
+    justifyContent: "flex-end",
+  },
+  newLabelText: {
+    color: "white",
+    fontSize: fontSizes.sz12,
+    fontWeight: "bold",
   },
 });

@@ -16,6 +16,7 @@ const colors = {
 };
 
 const fontSizes = {
+  sz12: 12,
   sz14: 14,
   sz15: 15,
   sz16: 16,

@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { colors, fontSizes, globalStyles } from "@/styles/globalStyles";
 import ProductCard from "@/components/ProductCard";
 import CustomBanner from "@/components/CustomBanner";
-import { getAllProduct } from "@/service/product";
+import { getAllproduct } from "@/service/product";
 import { addShoppingCart } from "@/service/shoppingCart";
 import Toast from "react-native-toast-message";
 import { useWebSocket } from "@/hooks/websocket";
@@ -41,6 +41,9 @@ export default function Home({ navigation }) {
   const [product, setProduct] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingBtnPlus, setLoadingBtnPlus] = useState({});
+  const [page, setPage] = useState(0);
+  const [size, setSize] = useState(10);
+  const [totalElement, setTotalElement] = useState();
   // const [user, setUser] = useState();
   // ----------------------------------------------------------
   const user = useUserData();
@@ -62,10 +65,11 @@ export default function Home({ navigation }) {
   const getProducts = async () => {
     setLoading(true);
     try {
-      const res = await getAllProduct();
+      const res = await getAllproduct(page, size, "", true, "");
 
       if (res.success) {
         setProduct(res.data);
+        setTotalElement(res.totalElements);
       }
     } catch (error) {
       console.log("Error file Home: ", error);
@@ -116,6 +120,22 @@ export default function Home({ navigation }) {
     navigation.navigate("ProductDetail", { productId, userId: user.id });
   };
 
+  const handleLoadMore = async () => {
+    if (product.length >= totalElement) return; // Kiểm tra xem đã tải hết chưa
+    setLoading(true);
+    try {
+      const res = await getAllproduct(page, size + 2, "", true, "");
+      if (res.success) {
+        setProduct(res.data);
+        setSize((prev) => prev + 1);
+      }
+    } catch (error) {
+      console.log("Error file Home: ", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <View style={globalStyles.container}>
       <ScrollView
@@ -151,7 +171,9 @@ export default function Home({ navigation }) {
           </View>
 
           <View>
-            <Text style={styles.text_title_product}>Sản phẩm mới</Text>
+            <Text style={styles.text_title_product}>
+              Sản phẩm mới ({totalElement})
+            </Text>
 
             <View style={styles.viewProduct}>
               {loading ? (
@@ -165,7 +187,16 @@ export default function Home({ navigation }) {
                 </>
               ) : (
                 product.map((item, index) => (
-                  <View key={item.id} style={{ width: "45%" }}>
+                  <View
+                    key={item.id}
+                    style={{ width: "45%", position: "relative" }}
+                  >
+                    {/* Nếu sản phẩm mới, hiển thị nhãn */}
+                    {item.isNew && (
+                      <View style={styles.newLabel}>
+                        <Text style={styles.newLabelText}>Mới</Text>
+                      </View>
+                    )}
                     <ProductCard
                       loadingBtnPlus={loadingBtnPlus[item.id]}
                       product={item}
@@ -178,6 +209,13 @@ export default function Home({ navigation }) {
             </View>
           </View>
         </View>
+
+        {/* Nút Xem thêm */}
+        {!loading && product.length < totalElement && (
+          <Pressable style={styles.loadMoreBtn} onPress={handleLoadMore}>
+            <Text style={styles.loadMoreText}>Xem thêm</Text>
+          </Pressable>
+        )}
       </ScrollView>
     </View>
   );
@@ -228,5 +266,34 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "space-around",
     rowGap: 5,
+  },
+  newLabel: {
+    position: "absolute",
+    top: 10,
+    right: 10,
+    backgroundColor: colors.primary,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+    zIndex: 1,
+    justifyContent: "flex-end",
+  },
+  newLabelText: {
+    color: "white",
+    fontSize: fontSizes.sz12,
+    fontWeight: "bold",
+  },
+  loadMoreBtn: {
+    alignSelf: "center",
+    backgroundColor: colors.primary,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 5,
+    marginVertical: 10,
+  },
+  loadMoreText: {
+    color: "white",
+    fontSize: fontSizes.sz15,
+    fontWeight: "bold",
   },
 });
